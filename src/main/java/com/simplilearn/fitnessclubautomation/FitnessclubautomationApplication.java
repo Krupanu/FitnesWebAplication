@@ -1,7 +1,10 @@
 package com.simplilearn.fitnessclubautomation;
 
+import com.simplilearn.fitnessclubautomation.model.Admin;
+import com.simplilearn.fitnessclubautomation.repository.AdminRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 
 import java.awt.*;
 import java.io.IOException;
@@ -12,14 +15,17 @@ import java.net.URISyntaxException;
 public class FitnessclubautomationApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(FitnessclubautomationApplication.class, args);
+        ApplicationContext context = SpringApplication.run(FitnessclubautomationApplication.class, args);
+        AdminRepository adminRepository=context.getBean(AdminRepository.class);
+        Admin admin = new Admin("Waseem","admin@gmail.com","admin123");
+        adminRepository.save(admin);
         openHomePage();
     }
 
     private static void openHomePage() {
         try {
             URI homepage = new URI("http://localhost:8086/");
-            if(Desktop.isDesktopSupported()){
+            if (Desktop.isDesktopSupported()) {
                 Desktop desktop = Desktop.getDesktop();
                 try {
                     desktop.browse(homepage);
@@ -27,7 +33,7 @@ public class FitnessclubautomationApplication {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-            }else{
+            } else {
                 Runtime runtime = Runtime.getRuntime();
                 try {
                     runtime.exec("xdg-open " + homepage);

@@ -26,6 +26,12 @@ public class Admin {
         this.adminPassword = adminPassword;
     }
 
+    public Admin(String adminName, String adminEmail, String adminPassword) {
+        this.adminName = adminName;
+        this.adminEmail = adminEmail;
+        this.adminPassword = adminPassword;
+    }
+
     public Long getAdminId() {
         return adminId;
     }
