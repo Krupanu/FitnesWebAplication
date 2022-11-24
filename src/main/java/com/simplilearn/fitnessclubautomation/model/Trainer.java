@@ -13,6 +13,8 @@ public class Trainer {
     private String trainerName;
     @Column(name = "trainer_age", nullable = false)
     private int trainerAge;
+    @Column(name = "trainer_gender", nullable = false)
+    private String trainerGender;
     @Column(name = "trainer_experience", nullable = false)
     private int trainerExperience;
     @Column(name = "trainer_address", nullable = false)
@@ -21,10 +23,19 @@ public class Trainer {
     public Trainer() {
     }
 
-    public Trainer(Long trainerId, String trainerName, int trainerAge, int trainerExperience, String trainerAddress) {
+    public Trainer(Long trainerId, String trainerName, int trainerAge, String trainerGender, int trainerExperience, String trainerAddress) {
         this.trainerId = trainerId;
         this.trainerName = trainerName;
         this.trainerAge = trainerAge;
+        this.trainerGender = trainerGender;
+        this.trainerExperience = trainerExperience;
+        this.trainerAddress = trainerAddress;
+    }
+
+    public Trainer(String trainerName, int trainerAge, String trainerGender, int trainerExperience, String trainerAddress) {
+        this.trainerName = trainerName;
+        this.trainerAge = trainerAge;
+        this.trainerGender = trainerGender;
         this.trainerExperience = trainerExperience;
         this.trainerAddress = trainerAddress;
     }
@@ -51,6 +62,14 @@ public class Trainer {
 
     public void setTrainerAge(int trainerAge) {
         this.trainerAge = trainerAge;
+    }
+
+    public String getTrainerGender() {
+        return trainerGender;
+    }
+
+    public void setTrainerGender(String trainerGender) {
+        this.trainerGender = trainerGender;
     }
 
     public int getTrainerExperience() {

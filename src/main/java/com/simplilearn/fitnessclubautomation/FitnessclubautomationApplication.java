@@ -16,9 +16,9 @@ public class FitnessclubautomationApplication {
 
     public static void main(String[] args) {
         ApplicationContext context = SpringApplication.run(FitnessclubautomationApplication.class, args);
-        AdminRepository adminRepository=context.getBean(AdminRepository.class);
+        /*AdminRepository adminRepository=context.getBean(AdminRepository.class);
         Admin admin = new Admin("Waseem","admin@gmail.com","admin123");
-        adminRepository.save(admin);
+        adminRepository.save(admin);*/
         openHomePage();
     }
 
