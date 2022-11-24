@@ -32,6 +32,14 @@ public class Subscriber {
         this.subscriberStatus = subscriberStatus;
     }
 
+    public Subscriber(String subscriberName, int subscriberAge, String subscriberGender, String subscriberAddress, boolean subscriberStatus) {
+        this.subscriberName = subscriberName;
+        this.subscriberAge = subscriberAge;
+        this.subscriberGender = subscriberGender;
+        this.subscriberAddress = subscriberAddress;
+        this.subscriberStatus = subscriberStatus;
+    }
+
     public Long getSubscriberId() {
         return subscriberId;
     }
