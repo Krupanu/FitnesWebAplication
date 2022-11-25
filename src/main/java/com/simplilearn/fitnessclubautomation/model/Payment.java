@@ -16,20 +16,34 @@ public class Payment {
     @Column(name = "payment_mode", nullable = false)
     private String paymentMode;
 
+    @ManyToOne
+    @JoinColumn(name = "payment_subscriber_id")
+    private Subscriber subscriber;
+
+    public Subscriber getSubscriber() {
+        return subscriber;
+    }
+
+    public void setSubscriber(Subscriber subscriber) {
+        this.subscriber = subscriber;
+    }
+
     public Payment() {
     }
 
-    public Payment(Long paymentId, int paidAmount, String paymentDate, String paymentMode) {
+    public Payment(Long paymentId, int paidAmount, String paymentDate, String paymentMode, Subscriber subscriber) {
         this.paymentId = paymentId;
         this.paidAmount = paidAmount;
         this.paymentDate = paymentDate;
         this.paymentMode = paymentMode;
+        this.subscriber = subscriber;
     }
 
-    public Payment(int paidAmount, String paymentDate, String paymentMode) {
+    public Payment(int paidAmount, String paymentDate, String paymentMode, Subscriber subscriber) {
         this.paidAmount = paidAmount;
         this.paymentDate = paymentDate;
         this.paymentMode = paymentMode;
+        this.subscriber = subscriber;
     }
 
     public Long getPaymentId() {

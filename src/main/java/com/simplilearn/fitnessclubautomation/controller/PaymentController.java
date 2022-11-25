@@ -1,7 +1,9 @@
 package com.simplilearn.fitnessclubautomation.controller;
 
-import com.simplilearn.fitnessclubautomation.model.Trainer;
+import com.simplilearn.fitnessclubautomation.model.Payment;
+import com.simplilearn.fitnessclubautomation.model.Subscriber;
 import com.simplilearn.fitnessclubautomation.service.PaymentService;
+import com.simplilearn.fitnessclubautomation.service.SubscriberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,48 +14,61 @@ import java.util.List;
 public class PaymentController {
     @Autowired
     PaymentService paymentService;
+    @Autowired
+    SubscriberService subscriberService;
 
-    /*@RequestMapping(value = "/trainer/add", method = RequestMethod.POST)
-    private Trainer addTrainer(@RequestParam(value = "trainer_name", required = true) String trainer_name, @RequestParam(value = "trainer_age", required = true) int trainer_age, @RequestParam(value = "trainer_gender", required = true) String trainer_gender, @RequestParam(value = "trainer_experience", required = true) int trainer_experience, @RequestParam(value = "trainer_address", required = true) String trainer_address) {
-        Trainer tr = new Trainer(trainer_name, trainer_age, trainer_gender, trainer_experience, trainer_address);
-        return trainerService.addTrainer(tr);
+    @RequestMapping(value = "/payment/add", method = RequestMethod.POST)
+    private Payment addPayment(@RequestParam(value = "payment_amount", required = true) int payment_amount,
+                               @RequestParam(value = "payment_date", required = true) String payment_date,
+                               @RequestParam(value = "payment_mode", required = true) String payment_mode,
+                               @RequestParam(value = "payment_subscriber_id", required = true) Long payment_subscriber_id
+    ) {
+        Subscriber s = subscriberService.getSubscriber(payment_subscriber_id);
+        Payment payment = new Payment(payment_amount, payment_date, payment_mode, s);
+        return paymentService.addPayment(payment);
     }
 
-    @RequestMapping(value = "/trainer/edit", method = RequestMethod.POST)
-    private Trainer editTrainer(@RequestParam(value = "trainer_id", required = true) Long trainer_id, @RequestParam(value = "trainer_name", required = true) String trainer_name, @RequestParam(value = "trainer_age", required = true) int trainer_age, @RequestParam(value = "trainer_gender", required = true) String trainer_gender, @RequestParam(value = "trainer_experience", required = true) int trainer_experience, @RequestParam(value = "trainer_address", required = true) String trainer_address) {
-        Trainer tr = new Trainer(trainer_id, trainer_name, trainer_age, trainer_gender, trainer_experience, trainer_address);
-        return trainerService.addTrainer(tr);
+    @RequestMapping(value = "/payment/edit", method = RequestMethod.POST)
+    private Payment editPayment(@RequestParam(value = "payment_id", required = true) Long payment_id,
+                                @RequestParam(value = "payment_amount", required = true) int payment_amount,
+                                @RequestParam(value = "payment_date", required = true) String payment_date,
+                                @RequestParam(value = "payment_mode", required = true) String payment_mode,
+                                @RequestParam(value = "payment_subscriber_id", required = true) Long payment_subscriber_id
+    ) {
+        Subscriber subscriber = subscriberService.getSubscriber(payment_subscriber_id);
+        Payment payment = new Payment(payment_id, payment_amount, payment_date, payment_mode,subscriber);
+        return paymentService.addPayment(payment);
     }
 
-    @RequestMapping(value = "/trainer/delete/{trainer_id}", method = RequestMethod.GET)
-    private Boolean deleteTrainer(@PathVariable Long trainer_id) {
+//    @RequestMapping(value = "/payment/delete/{payment_id}", method = RequestMethod.GET)
+//    private Boolean deletePayment(@PathVariable Long payment_id) {
+//        try {
+//            paymentService.deletePayment(payment_id);
+//            return true;
+//        } catch (Exception ex) {
+//            return false;
+//        }
+//    }
+
+    @RequestMapping(value = "/payment")
+    private List<Payment> getAllPayments() {
+        List<Payment> payments = new ArrayList<>();
         try {
-            trainerService.deleteTrainer(trainer_id);
-            return true;
+            payments = paymentService.getAllPayments();
+            return payments;
         } catch (Exception ex) {
-            return false;
+            return payments;
         }
     }
 
-    @RequestMapping(value = "/trainer")
-    private List<Trainer> getAllTrainers() {
-        List<Trainer> trainers = new ArrayList<>();
+    @RequestMapping(value = "/payment/{payment_id}")
+    private Payment getPayment(@PathVariable Long payment_id) {
+        Payment payment = new Payment();
         try {
-            trainers = trainerService.getAllTrainers();
-            return trainers;
+            payment = paymentService.getPayment(payment_id);
+            return payment;
         } catch (Exception ex) {
-            return trainers;
+            return payment;
         }
     }
-
-    @RequestMapping(value = "/trainer/{trainer_id}")
-    private Trainer getTrainer(@PathVariable Long trainer_id) {
-        Trainer trainer = new Trainer();
-        try {
-            trainer = trainerService.getTrainer(trainer_id);
-            return trainer;
-        } catch (Exception ex) {
-            return trainer;
-        }
-    }*/
 }
