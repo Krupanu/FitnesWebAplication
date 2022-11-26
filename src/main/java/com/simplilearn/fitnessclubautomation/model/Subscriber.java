@@ -19,25 +19,35 @@ public class Subscriber {
     private String subscriberAddress;
     @Column(name = "subscriber_status", nullable = false)
     private boolean subscriberStatus;
+    @ManyToOne
+    @JoinColumn(name = "subscriber_trainer_id")
+    private Trainer trainer;
+    @ManyToOne
+    @JoinColumn(name = "subscription_plan_id")
+    private SubscriptionPlan subscriptionPlan;
 
     public Subscriber() {
     }
 
-    public Subscriber(Long subscriberId, String subscriberName, int subscriberAge, String subscriberGender, String subscriberAddress, boolean subscriberStatus) {
+    public Subscriber(Long subscriberId, String subscriberName, int subscriberAge, String subscriberGender, String subscriberAddress, boolean subscriberStatus, Trainer trainer, SubscriptionPlan subscriptionPlan) {
         this.subscriberId = subscriberId;
         this.subscriberName = subscriberName;
         this.subscriberAge = subscriberAge;
         this.subscriberGender = subscriberGender;
         this.subscriberAddress = subscriberAddress;
         this.subscriberStatus = subscriberStatus;
+        this.trainer = trainer;
+        this.subscriptionPlan = subscriptionPlan;
     }
 
-    public Subscriber(String subscriberName, int subscriberAge, String subscriberGender, String subscriberAddress, boolean subscriberStatus) {
+    public Subscriber(String subscriberName, int subscriberAge, String subscriberGender, String subscriberAddress, boolean subscriberStatus, Trainer trainer, SubscriptionPlan subscriptionPlan) {
         this.subscriberName = subscriberName;
         this.subscriberAge = subscriberAge;
         this.subscriberGender = subscriberGender;
         this.subscriberAddress = subscriberAddress;
         this.subscriberStatus = subscriberStatus;
+        this.trainer = trainer;
+        this.subscriptionPlan = subscriptionPlan;
     }
 
     public Long getSubscriberId() {
@@ -86,5 +96,21 @@ public class Subscriber {
 
     public void setSubscriberStatus(boolean subscriberStatus) {
         this.subscriberStatus = subscriberStatus;
+    }
+
+    public Trainer getTrainer() {
+        return trainer;
+    }
+
+    public void setTrainer(Trainer trainer) {
+        this.trainer = trainer;
+    }
+
+    public SubscriptionPlan getSubscriptionPlan() {
+        return subscriptionPlan;
+    }
+
+    public void setSubscriptionPlan(SubscriptionPlan subscriptionPlan) {
+        this.subscriptionPlan = subscriptionPlan;
     }
 }
