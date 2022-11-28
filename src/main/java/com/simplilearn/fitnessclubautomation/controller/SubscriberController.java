@@ -7,12 +7,14 @@ import com.simplilearn.fitnessclubautomation.service.SubscriberService;
 import com.simplilearn.fitnessclubautomation.service.SubscriptionPlanService;
 import com.simplilearn.fitnessclubautomation.service.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
+@Controller
 public class SubscriberController {
     @Autowired
     SubscriberService subscriberService;
@@ -21,8 +23,13 @@ public class SubscriberController {
     @Autowired
     private SubscriptionPlanService subscriptionPlanService;
 
+    @RequestMapping(value = "/subscriber/add-new")
+    private String addSubscriber() {
+        return "add-subscriber";
+    }
+
     @RequestMapping(value = "/subscriber/add", method = RequestMethod.POST)
-    private Subscriber addSubscriber(
+    private String addSubscriber(
             @RequestParam(value = "subscriber_name", required = true) String subscriber_name,
             @RequestParam(value = "subscriber_age", required = true) int subscriber_age,
             @RequestParam(value = "subscriber_gender", required = true) String subscriber_gender,
@@ -32,7 +39,11 @@ public class SubscriberController {
         Trainer trainer = trainerService.getTrainer(subscriber_trainer_id);
         SubscriptionPlan subscriptionPlan = subscriptionPlanService.getSubscriptionPlan(subscription_plan_id);
         Subscriber subscriber = new Subscriber(subscriber_name, subscriber_age, subscriber_gender, subscriber_address, true, 0, trainer, subscriptionPlan);
-        return subscriberService.addSubscriber(subscriber);
+        if (subscriberService.addSubscriber(subscriber) != null) {
+            return "redirect:/subscriber";
+        } else {
+            return "redirect:/subscriber";
+        }
     }
 
     @RequestMapping(value = "/subscriber/edit", method = RequestMethod.POST)
@@ -62,13 +73,16 @@ public class SubscriberController {
     }
 
     @RequestMapping(value = "/subscriber")
-    private List<Subscriber> getAllSubscribers() {
+    private String getAllSubscribers(ModelMap modelMap) {
         List<Subscriber> subscribers = new ArrayList<>();
         try {
             subscribers = subscriberService.getAllSubscribers();
-            return subscribers;
+            modelMap.addAttribute("subscriber_list", subscribers);
+            return "subscriber-list";
+//            return subscribers;
         } catch (Exception ex) {
-            return subscribers;
+//            return subscribers;
+            return "subscriber-list";
         }
     }
 
