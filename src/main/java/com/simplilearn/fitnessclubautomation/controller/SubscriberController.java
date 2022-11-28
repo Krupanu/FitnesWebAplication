@@ -1,7 +1,6 @@
 package com.simplilearn.fitnessclubautomation.controller;
 
 import com.simplilearn.fitnessclubautomation.model.Subscriber;
-import com.simplilearn.fitnessclubautomation.model.Subscriber;
 import com.simplilearn.fitnessclubautomation.model.SubscriptionPlan;
 import com.simplilearn.fitnessclubautomation.model.Trainer;
 import com.simplilearn.fitnessclubautomation.service.SubscriberService;
@@ -32,7 +31,7 @@ public class SubscriberController {
             @RequestParam(value = "subscription_plan_id", required = true) Long subscription_plan_id) {
         Trainer trainer = trainerService.getTrainer(subscriber_trainer_id);
         SubscriptionPlan subscriptionPlan = subscriptionPlanService.getSubscriptionPlan(subscription_plan_id);
-        Subscriber subscriber = new Subscriber(subscriber_name, subscriber_age, subscriber_gender, subscriber_address, true, trainer, subscriptionPlan);
+        Subscriber subscriber = new Subscriber(subscriber_name, subscriber_age, subscriber_gender, subscriber_address, true, 0, trainer, subscriptionPlan);
         return subscriberService.addSubscriber(subscriber);
     }
 
@@ -47,7 +46,8 @@ public class SubscriberController {
                                       @RequestParam(value = "subscription_plan_id", required = true) Long subscription_plan_id) {
         Trainer trainer = trainerService.getTrainer(subscriber_trainer_id);
         SubscriptionPlan subscriptionPlan = subscriptionPlanService.getSubscriptionPlan(subscription_plan_id);
-        Subscriber subscriber = new Subscriber(subscriber_id, subscriber_name, subscriber_age, subscriber_gender, subscriber_address, subscriber_status, trainer, subscriptionPlan);
+        int paid_fees = subscriberService.getSubscriber(subscriber_id).getSubscriberFeesPaid();
+        Subscriber subscriber = new Subscriber(subscriber_id, subscriber_name, subscriber_age, subscriber_gender, subscriber_address, subscriber_status, paid_fees, trainer, subscriptionPlan);
         return subscriberService.addSubscriber(subscriber);
     }
 

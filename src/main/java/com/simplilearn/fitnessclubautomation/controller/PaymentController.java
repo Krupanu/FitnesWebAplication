@@ -4,6 +4,7 @@ import com.simplilearn.fitnessclubautomation.model.Payment;
 import com.simplilearn.fitnessclubautomation.model.Subscriber;
 import com.simplilearn.fitnessclubautomation.service.PaymentService;
 import com.simplilearn.fitnessclubautomation.service.SubscriberService;
+import com.simplilearn.fitnessclubautomation.service.SubscriptionPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,8 @@ public class PaymentController {
     PaymentService paymentService;
     @Autowired
     SubscriberService subscriberService;
+    @Autowired
+    SubscriptionPlanService subscriptionPlanService;
 
     @RequestMapping(value = "/payment/add", method = RequestMethod.POST)
     private Payment addPayment(@RequestParam(value = "payment_amount", required = true) int payment_amount,
@@ -24,6 +27,11 @@ public class PaymentController {
                                @RequestParam(value = "payment_subscriber_id", required = true) Long payment_subscriber_id
     ) {
         Subscriber s = subscriberService.getSubscriber(payment_subscriber_id);
+        /*Long planId = s.getSubscriptionPlan().getPlanId();
+        int planfees = subscriptionPlanService.getSubscriptionPlan(planId).getPlanFees();
+        int paid = s.getSubscriberFeesPaid();
+        int total = paid + payment_amount;
+        if (total > planfees) {}*/
         Payment payment = new Payment(payment_amount, payment_date, payment_mode, s);
         return paymentService.addPayment(payment);
     }
@@ -36,7 +44,7 @@ public class PaymentController {
                                 @RequestParam(value = "payment_subscriber_id", required = true) Long payment_subscriber_id
     ) {
         Subscriber subscriber = subscriberService.getSubscriber(payment_subscriber_id);
-        Payment payment = new Payment(payment_id, payment_amount, payment_date, payment_mode,subscriber);
+        Payment payment = new Payment(payment_id, payment_amount, payment_date, payment_mode, subscriber);
         return paymentService.addPayment(payment);
     }
 

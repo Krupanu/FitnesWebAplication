@@ -19,6 +19,10 @@ public class Subscriber {
     private String subscriberAddress;
     @Column(name = "subscriber_status", nullable = false)
     private boolean subscriberStatus;
+
+    @Column(name = "subscriber_fees_paid", nullable = false)
+    private int subscriberFeesPaid;
+
     @ManyToOne
     @JoinColumn(name = "subscriber_trainer_id")
     private Trainer trainer;
@@ -29,23 +33,25 @@ public class Subscriber {
     public Subscriber() {
     }
 
-    public Subscriber(Long subscriberId, String subscriberName, int subscriberAge, String subscriberGender, String subscriberAddress, boolean subscriberStatus, Trainer trainer, SubscriptionPlan subscriptionPlan) {
+    public Subscriber(Long subscriberId, String subscriberName, int subscriberAge, String subscriberGender, String subscriberAddress, boolean subscriberStatus, int subscriberFeesPaid, Trainer trainer, SubscriptionPlan subscriptionPlan) {
         this.subscriberId = subscriberId;
         this.subscriberName = subscriberName;
         this.subscriberAge = subscriberAge;
         this.subscriberGender = subscriberGender;
         this.subscriberAddress = subscriberAddress;
         this.subscriberStatus = subscriberStatus;
+        this.subscriberFeesPaid = subscriberFeesPaid;
         this.trainer = trainer;
         this.subscriptionPlan = subscriptionPlan;
     }
 
-    public Subscriber(String subscriberName, int subscriberAge, String subscriberGender, String subscriberAddress, boolean subscriberStatus, Trainer trainer, SubscriptionPlan subscriptionPlan) {
+    public Subscriber(String subscriberName, int subscriberAge, String subscriberGender, String subscriberAddress, boolean subscriberStatus, int subscriberFeesPaid, Trainer trainer, SubscriptionPlan subscriptionPlan) {
         this.subscriberName = subscriberName;
         this.subscriberAge = subscriberAge;
         this.subscriberGender = subscriberGender;
         this.subscriberAddress = subscriberAddress;
         this.subscriberStatus = subscriberStatus;
+        this.subscriberFeesPaid = subscriberFeesPaid;
         this.trainer = trainer;
         this.subscriptionPlan = subscriptionPlan;
     }
@@ -96,6 +102,14 @@ public class Subscriber {
 
     public void setSubscriberStatus(boolean subscriberStatus) {
         this.subscriberStatus = subscriberStatus;
+    }
+
+    public int getSubscriberFeesPaid() {
+        return subscriberFeesPaid;
+    }
+
+    public void setSubscriberFeesPaid(int subscriberFeesPaid) {
+        this.subscriberFeesPaid = subscriberFeesPaid;
     }
 
     public Trainer getTrainer() {
