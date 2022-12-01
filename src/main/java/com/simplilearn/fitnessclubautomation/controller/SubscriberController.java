@@ -51,6 +51,19 @@ public class SubscriberController {
         }
     }
 
+    @RequestMapping(value = "/subscriber/edit-subscriber/{subscriber_id}")
+    private String editSubscriber(ModelMap modelMap, @PathVariable Long subscriber_id) {
+        Subscriber subscriber = subscriberService.getSubscriber(subscriber_id);
+        modelMap.addAttribute("subscriber", subscriber);
+
+        List<Trainer> trainers = trainerService.getAllTrainers();
+        modelMap.addAttribute("trainers", trainers);
+
+        List<SubscriptionPlan> subscriptionPlans = subscriptionPlanService.getAllSubscriptionPlans();
+        modelMap.addAttribute("subscriptionPlans", subscriptionPlans);
+        return "edit-subscriber";
+    }
+
     @RequestMapping(value = "/subscriber/edit", method = RequestMethod.POST)
     private Subscriber editSubscriber(@RequestParam(value = "subscriber_id", required = true) Long subscriber_id,
                                       @RequestParam(value = "subscriber_name", required = true) String subscriber_name,
@@ -96,7 +109,7 @@ public class SubscriberController {
         Subscriber subscriber = new Subscriber();
         try {
             subscriber = subscriberService.getSubscriber(subscriber_id);
-            modelMap.addAttribute("subscriber",subscriber);
+            modelMap.addAttribute("subscriber", subscriber);
 //            <tr>
 //                    <td>Allocated Trainer</td>
 //                    <td><a href="../trainer/${subscriber.subscriberTrainer.geId}">${subscriber.subscriberCenter}</a></td>

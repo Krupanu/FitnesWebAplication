@@ -8,7 +8,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Edit Citizen</title>
+	<title>Edit Subscriber</title>
 	<style type="text/css">
 		td{
             border: 1px solid black;
@@ -31,80 +31,77 @@
 </head>
 <body>
     <jsp:include page="header.jsp" ></jsp:include>
-    <h2>Citizen Information</h2>
+    <h2>Subscriber Information</h2>
     <c:if test="${error==true || success==true}">
         ${message}
     </c:if>
 	<div class="formdiv">
-		<form action="/citizens/edit" method="POST">
+		<form action="/subscriber/edit" method="POST">
 			<table>
 				<thead>
 					<tr>
-						<th colspan="2"><h3>Edit Citizen</h3></th>
+						<th colspan="2"><h3>Edit Subscriber</h3></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td>
-							<label for="citizen_name">Citizen Name</label>
-						</td>
-						<td>
-							<input type="hidden" id="citizen_id" class="input" name="citizen_id" value="${citizen.citizenId}">
-							<input type="text" id="citizen_name" class="input" name="citizen_name" value="${citizen.citizenName}">
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<label for="citizen_city">Citizen City</label>
-						</td>
-						<td>
-							<select id="citizen_city" name="citizen_city" class="input">
-								<option value="">Select city</option>
-                                <c:forEach items="${cities}" var="city">
-                                    <option value="${city}" <c:if test="${city == citizen.citizenCity}">selected</c:if>>
-                                        ${city}
-                                    </option>
-                                </c:forEach>
-							</select>
-						</td>
-					</tr>
-					<tr>
-					    <td>
-                            <label for="citizen_doses">No. Of Doses</label>
+                        <td>
+                            <label for="subscriber_name">Subscriber Name</label>
                         </td>
                         <td>
-                            <select name="citizen_doses" id="citizen_doses" class="input" <c:if test="${citizen.citizenDoses==2}">disabled</c:if>>
-
-                                 <c:if test="${citizen.citizenDoses==0}">
-                                    <option value="0" selected>None</option>
-                                    <option value="1">One</option>
-                                    <option value="2" disabled>Two</option>
-                                 </c:if>
-                                <c:if test="${citizen.citizenDoses==1}">
-                                    <option value="0" disabled>None</option>
-                                    <option value="1" selected disabled>One</option>
-                                    <option value="2">Two</option>
-                                </c:if>
-                            </select>
-                            <c:if test="${citizen.citizenDoses==2}">
-                                Fully Vaccinated
-                            </c:if>
+                            <input type="hidden" id="subscriber_id" class="input" name="subscriber_id" value="${subscriber.subscriberId}">
+                            <input type="text" id="subscriber_name" class="input" name="subscriber_name" value="${subscriber.subscriberName}">
                         </td>
-					</tr>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="subscriber_age">Subscriber Age</label>
+                        </td>
+                        <td>
+                            <input type="text" id="subscriber_age" class="input" name="subscriber_age" value="${subscriber.subscriberAge}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="subscriber_gender">Subscriber Gender</label>
+                        </td>
+                        <td>
+                            <input type="radio" id="subscriber_gender_male" name="subscriber_gender" value="Male" <c:if test="${subscriber.subscriberGender == Male}">checked</c:if>>
+                            <label for="subscriber_gender_male">Male</label>
+                            <input type="radio" id="subscriber_gender_female" name="subscriber_gender" value="Female" <c:if test="${subscriber.subscriberGender == Female}">checked</c:if>>
+                            <label for="subscriber_gender_female">Female</label>
+                        </td>
+                    </tr>
 					<tr>
-						<td>
-							<label for="citizen_center">Vaccination Center</label>
-						</td>
-						<td>
-							<select id="citizen_center" name="citizen_center" class="input" <c:if test="${citizen.citizenDoses==2}">disabled</c:if>>
-							<c:forEach items="${vaccinationCenters}" var="center">
-							    <option value="${center.centerId}" <c:if test="${center.centerId == citizen.centerId}">selected</c:if>>
-							        ${center.centerName}
-							    </option>
-							</c:forEach>
-							</select>
-						</td>
-					</tr>
+                        <td>
+                            <label for="subscriber_trainer_id">Subscriber Trainer</label>
+                        </td>
+                        <td>
+                            <select id="subscriber_trainer" name="subscriber_trainer_id" class="input">
+                                <option value="">Select Trainer</option>
+                                <c:forEach items="${trainers}" var="trainer">
+                                    <option value="${trainer.trainerId}" <c:if test="${trainer.trainerId == subscriber.trainer.trainerId}">selected</c:if>>
+                                        ${trainer.trainerName}
+                                    </option>
+                                </c:forEach>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="subscription_plan_id">Subscription Plan</label>
+                        </td>
+                        <td>
+                            <select id="subscription_plan_id" name="subscription_plan_id" class="input">
+                                <option value="">Select Subscription Plan</option>
+                                <c:forEach items="${subscriptionPlans}" var="plan">
+                                    <option value="${plan.planId}" <c:if test="${plan.planId == subscriber.subscriptionPlan.planId}">selected</c:if>>
+                                        ${trainer.trainerName}
+                                    </option>
+                                </c:forEach>
+                            </select>
+                        </td>
+                    </tr>
 					<tr>
 						<td colspan="2"><button type="submit">Submit</button></td>
 					</tr>
