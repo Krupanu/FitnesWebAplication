@@ -5,7 +5,7 @@
 <%@ page isELIgnored="false" %>
 <html>
     <head>
-        <title>${pageTitle}</title>
+        <title>Subscriber::${subscriber.subscriberName}</title>
         <style type="text/css">
         		table,th,td{
         			border: 1px solid black;
@@ -18,49 +18,48 @@
 
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-        <h2>Citizen Information</h2>
+        <h2>Subscriber Information</h2>
         <c:if test="${error==true || success==true}">
             ${message}
         </c:if>
         <table>
     		<thead>
     			<tr>
-    				<th colspan="2"><h3>${citizen.citizenName}</h3></th>
+    				<th colspan="2"><h3>${subscriber.subscriberName}</h3></th>
     			</tr>
     		</thead>
     		<tbody>
     			<tr>
     				<td>ID</td>
-    				<td>${citizen.citizenId}</td>
+    				<td>${subscriber.subscriberId}</td>
                 </tr>
-                
                 <tr>
-                    <td>City</td>
-                    <td>${citizen.citizenCity}</td>
+                    <td>Gender</td>
+                    <td>${subscriber.subscriberGender}</td>
+                </tr>
+                <tr>
+                    <td>Age(Years)</td>
+                    <td>${subscriber.subscriberAge}</td>
+                </tr>
+                <tr>
+                    <td>Address</td>
+                    <td>${subscriber.subscriberAddress}</td>
                 </tr>
 
                 <tr>
-                    <td>Number of Vaccines</td>
-                    <td>${citizen.citizenDoses}</td>
+                    <td>Paid Fees</td>
+                    <td>${subscriber.subscriberFeesPaid}</td>
                 </tr>
                 <tr>
-                    <td>Vaccination Status</td>
+                    <td>Subscriber Status</td>
                     <td>
-                        <c:if test="${citizen.citizenDoses == 0}">
-                            Not Vaccinated
+                        <c:if test="${subscriber.subscriberStatus == false}">
+                            Inactive
                         </c:if>
-                        <c:if test="${citizen.citizenDoses == 1}">
-                            Partially Vaccinated
-                        </c:if>
-                        <c:if test="${citizen.citizenDoses == 2}">
-                            Fully Vaccinated
+                        <c:if test="${subscriber.subscriberStatus == true}">
+                            Active
                         </c:if>
                     </td>
-                </tr>
-
-                <tr>
-                    <td>Allocated Vaccination Center</td>
-                    <td><a href="../vaccinationcenter/${citizen.citizenCenterId}">${citizen.citizenCenter}</a></td>
                 </tr>
     		</tbody>
     	</table>

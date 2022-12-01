@@ -15,11 +15,15 @@ import java.net.URISyntaxException;
 public class FitnessclubautomationApplication {
 
     public static void main(String[] args) {
-        ApplicationContext context = SpringApplication.run(FitnessclubautomationApplication.class, args);
+        try {
+            ApplicationContext context = SpringApplication.run(FitnessclubautomationApplication.class, args);
         /*AdminRepository adminRepository=context.getBean(AdminRepository.class);
         Admin admin = new Admin("Waseem","admin@gmail.com","admin123");
         adminRepository.save(admin);*/
-        openHomePage();
+            openHomePage();
+        } catch (Exception ex) {
+            System.out.println("ERROR - " + ex.getMessage());
+        }
     }
 
     private static void openHomePage() {

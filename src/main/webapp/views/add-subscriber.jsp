@@ -26,6 +26,7 @@
 		.input{
 			height: 20px;
 			width: 300px;
+			padding: 8px;
 		}
 	</style>
 </head>
@@ -61,27 +62,46 @@
 						</td>
 					</tr>
 					<tr>
+                        <td>
+                            <label for="subscriber_gender">Subscriber Gender</label>
+                        </td>
+                        <td>
+                            <input type="radio" id="subscriber_gender_male" name="subscriber_gender" value="Male">
+                            <label for="subscriber_gender_male">Male</label>
+                            <input type="radio" id="subscriber_gender_female" name="subscriber_gender" value="Female">
+                            <label for="subscriber_gender_female">Female</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="subscriber_address">Subscriber Address</label>
+                        </td>
+                        <td>
+                            <textarea id="subscriber_address" class="input" style="height: 200px" name="subscriber_address"></textarea>
+                        </td>
+                    </tr>
+					<tr>
 						<td>
-							<label for="subscriber_city">Subscriber City</label>
+							<label for="subscriber_trainer_id">Select Trainer</label>
 						</td>
 						<td>
-							<select id="subscriber_city" name="subscriber_city" class="input">
-                                <option value="">Select city</option>
-                                <c:forEach items="${cities}" var="city">
-                                    <option value="${city}">${city}</option>
+							<select id="subscriber_trainer_id" name="subscriber_trainer_id" class="input">
+                                <option value="">Select Trainer</option>
+                                <c:forEach items="${trainers}" var="trainer">
+                                    <option value="${trainer.trainerId}">${trainer.trainerName}</option>
                                 </c:forEach>
                             </select>
 						</td>
 					</tr>
 					<tr>
                         <td>
-                            <label for="subscriber_center">Subscriber City</label>
+                            <label for="subscription_plan_id">Subscription Plan</label>
                         </td>
                         <td>
-                            <select id="subscriber_center" name="subscriber_center" class="input">
-                                <c:forEach items="${vaccinationCenters}" var="center">
-                                    <option value="${center.centerId}">
-                                        ${center.centerName}
+                            <select id="subscription_plan_id" name="subscription_plan_id" class="input">
+                                <c:forEach items="${subscriptionPlans}" var="plan">
+                                    <option value="${plan.planId}">
+                                        ${plan.planTitle}
                                     </option>
                                 </c:forEach>
                             </select>

@@ -24,7 +24,12 @@ public class SubscriberController {
     private SubscriptionPlanService subscriptionPlanService;
 
     @RequestMapping(value = "/subscriber/add-new")
-    private String addSubscriber() {
+    private String addSubscriber(ModelMap modelMap) {
+        List<Trainer> trainers = trainerService.getAllTrainers();
+        modelMap.addAttribute("trainers", trainers);
+
+        List<SubscriptionPlan> subscriptionPlans = subscriptionPlanService.getAllSubscriptionPlans();
+        modelMap.addAttribute("subscriptionPlans", subscriptionPlans);
         return "add-subscriber";
     }
 
@@ -87,13 +92,20 @@ public class SubscriberController {
     }
 
     @RequestMapping(value = "/subscriber/{subscriber_id}")
-    private Subscriber getSubscriber(@PathVariable Long subscriber_id) {
+    private String getSubscriber(ModelMap modelMap, @PathVariable Long subscriber_id) {
         Subscriber subscriber = new Subscriber();
         try {
             subscriber = subscriberService.getSubscriber(subscriber_id);
-            return subscriber;
+            modelMap.addAttribute("subscriber",subscriber);
+//            <tr>
+//                    <td>Allocated Trainer</td>
+//                    <td><a href="../trainer/${subscriber.subscriberTrainer.geId}">${subscriber.subscriberCenter}</a></td>
+//                </tr>
+            return "subscriber-single";
         } catch (Exception ex) {
-            return subscriber;
+            modelMap.addAttribute("error", true);
+            modelMap.addAttribute("message", ex.getMessage());
+            return "redirect:/subscriber/{subscriber_id}";
         }
     }
 }
