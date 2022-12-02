@@ -25,7 +25,7 @@
         <table>
     		<thead>
     		    <tr>
-    		        <td colspan="7"><a href="subscriber/add-new" style="float:right"><button>Add New Subscriber</button></a></td>
+    		        <td colspan="8"><a href="subscriber/add-new" style="float:right"><button>Add New Subscriber</button></a></td>
     		    </tr>
     			<tr>
     				<th>ID</th>
@@ -65,7 +65,7 @@
     		</tbody>
     		<tfoot>
     		    <tr>
-    		        <td colspan="7">${message}</td>
+    		        <td colspan="8">${message}</td>
     		    </tr>
     		</tfoot>
     	</table>

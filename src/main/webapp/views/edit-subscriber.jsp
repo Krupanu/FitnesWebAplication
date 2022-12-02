@@ -24,9 +24,10 @@
         }
 
 		.input{
-			height: 20px;
-			width: 300px;
-		}
+            height: 20px;
+            width: 300px;
+            padding: 8px;
+        }
 	</style>
 </head>
 <body>
@@ -63,12 +64,20 @@
                     </tr>
                     <tr>
                         <td>
+                            <label for="subscriber_address">Subscriber Address</label>
+                        </td>
+                        <td>
+                            <textarea id="subscriber_address" class="input" name="subscriber_address" value="${subscriber.subscriberAge}">${subscriber.subscriberAddress}</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
                             <label for="subscriber_gender">Subscriber Gender</label>
                         </td>
                         <td>
-                            <input type="radio" id="subscriber_gender_male" name="subscriber_gender" value="Male" <c:if test="${subscriber.subscriberGender == Male}">checked</c:if>>
+                            <input type="radio" id="subscriber_gender_male" name="subscriber_gender" value="Male" <c:if test="${subscriber.subscriberGender == \"Male\"}">checked</c:if>>
                             <label for="subscriber_gender_male">Male</label>
-                            <input type="radio" id="subscriber_gender_female" name="subscriber_gender" value="Female" <c:if test="${subscriber.subscriberGender == Female}">checked</c:if>>
+                            <input type="radio" id="subscriber_gender_female" name="subscriber_gender" value="Female" <c:if test="${subscriber.subscriberGender == \"Female\"}">checked</c:if>>
                             <label for="subscriber_gender_female">Female</label>
                         </td>
                     </tr>
@@ -77,7 +86,7 @@
                             <label for="subscriber_trainer_id">Subscriber Trainer</label>
                         </td>
                         <td>
-                            <select id="subscriber_trainer" name="subscriber_trainer_id" class="input">
+                            <select id="subscriber_trainer" name="subscriber_trainer_id">
                                 <option value="">Select Trainer</option>
                                 <c:forEach items="${trainers}" var="trainer">
                                     <option value="${trainer.trainerId}" <c:if test="${trainer.trainerId == subscriber.trainer.trainerId}">selected</c:if>>
@@ -92,17 +101,18 @@
                             <label for="subscription_plan_id">Subscription Plan</label>
                         </td>
                         <td>
-                            <select id="subscription_plan_id" name="subscription_plan_id" class="input">
+                            <select id="subscription_plan_id" name="subscription_plan_id">
                                 <option value="">Select Subscription Plan</option>
                                 <c:forEach items="${subscriptionPlans}" var="plan">
                                     <option value="${plan.planId}" <c:if test="${plan.planId == subscriber.subscriptionPlan.planId}">selected</c:if>>
-                                        ${trainer.trainerName}
+                                        ${plan.planTitle}
                                     </option>
                                 </c:forEach>
                             </select>
                         </td>
                     </tr>
 					<tr>
+					    <input type="hidden" value="${subscriber.subscriberStatus}" name="subscriber_status">
 						<td colspan="2"><button type="submit">Submit</button></td>
 					</tr>
 				</tbody>
