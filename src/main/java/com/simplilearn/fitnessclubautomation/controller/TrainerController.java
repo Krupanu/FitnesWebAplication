@@ -4,20 +4,32 @@ import com.simplilearn.fitnessclubautomation.model.Trainer;
 import com.simplilearn.fitnessclubautomation.service.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
+@Controller
 public class TrainerController {
     @Autowired
     TrainerService trainerService;
 
+    @RequestMapping(value = "/trainer/add-new")
+    private String addTrainer() {
+        return "add-trainer";
+    }
+
     @RequestMapping(value = "/trainer/add", method = RequestMethod.POST)
-    private Trainer addTrainer(@RequestParam(value = "trainer_name", required = true) String trainer_name, @RequestParam(value = "trainer_age", required = true) int trainer_age, @RequestParam(value = "trainer_gender", required = true) String trainer_gender, @RequestParam(value = "trainer_experience", required = true) int trainer_experience, @RequestParam(value = "trainer_address", required = true) String trainer_address) {
+    private String addTrainer(@RequestParam(value = "trainer_name", required = true) String trainer_name,
+                               @RequestParam(value = "trainer_age", required = true) int trainer_age,
+                               @RequestParam(value = "trainer_gender", required = true) String trainer_gender,
+                               @RequestParam(value = "trainer_experience", required = true) int trainer_experience,
+                               @RequestParam(value = "trainer_address", required = true) String trainer_address) {
         Trainer tr = new Trainer(trainer_name, trainer_age, trainer_gender, trainer_experience, trainer_address);
-        return trainerService.addTrainer(tr);
+        tr = trainerService.addTrainer(tr);
+        return "redirect:/trainer";
     }
 
     @RequestMapping(value = "/trainer/edit", method = RequestMethod.POST)
@@ -37,13 +49,21 @@ public class TrainerController {
     }
 
     @RequestMapping(value = "/trainer")
-    private List<Trainer> getAllTrainers() {
+    private String getAllTrainers(ModelMap modelMap) {
         List<Trainer> trainers = new ArrayList<>();
         try {
             trainers = trainerService.getAllTrainers();
-            return trainers;
+            if (trainers.size() > 0) {
+                modelMap.addAttribute("trainers", trainers);
+                modelMap.addAttribute("message", "Total <b>" + trainers.size() + "</b> trainers found.");
+            } else {
+                modelMap.addAttribute("message", "Total <b>" + trainers.size() + "</b> trainers found.");
+            }
+            return "trainer-list";
         } catch (Exception ex) {
-            return trainers;
+            modelMap.addAttribute("error", true);
+            modelMap.addAttribute("message", ex.getMessage());
+            return "trainer-list";
         }
     }
 

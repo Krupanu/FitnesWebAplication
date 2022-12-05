@@ -11,7 +11,7 @@
         			border: 1px solid black;
         			border-collapse: collapse;
         			padding:8px;
-        			text-align: center;
+        			text-align: trainer;
         		}
         </style>
     </head>
@@ -21,36 +21,42 @@
         <c:if test="${error==true || success==true}">
             ${message}
         </c:if>
-        <h2>Centers</h2>
+        <h2>Trainers</h2>
         <table>
             <thead>
                 <tr>
-                    <td colspan="4"><a href="vaccinationcenter/add-new" style="float:right"><button>Add New Center</button></a></td>
+                    <td colspan="7"><a href="trainer/add-new" style="float:right"><button>Add New Trainer</button></a></td>
                 </tr>
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
-                    <th>City</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>Experience</th>
+                    <th>Address</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                <c:forEach items="${centers}" var="center">
+                <c:forEach items="${trainers}" var="trainer">
                 <tr>
-                    <td>${center.centerId}</td>
-                    <td>${center.centerName}</td>
-                    <td>${center.centerCity}</td>
+                    <td>${trainer.trainerId}</td>
+                    <td>${trainer.trainerName}</td>
+                    <td>${trainer.trainerAge}</td>
+                    <td>${trainer.trainerGender}</td>
+                    <td>${trainer.trainerExperience}</td>
+                    <td>${trainer.trainerAddress}</td>
                     <td>
-                        <a href="vaccinationcenter/${center.centerId}"><button>View</button></a>
-                        <a href="vaccinationcenter/edit-center/${center.centerId}"><button>Edit</button></a>
-                        <a href="vaccinationcenter/delete/${center.centerId}"><button>Delete</button></a>
+                        <a href="trainer/${trainer.trainerId}"><button>View</button></a>
+                        <a href="trainer/edit-trainer/${trainer.trainerId}"><button>Edit</button></a>
+                        <a href="trainer/delete/${trainer.trainerId}"><button>Delete</button></a>
                     </td>
                 </tr>
                 </c:forEach>
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="4">${message}</td>
+                    <td colspan="7">${message}</td>
                 </tr>
             </tfoot>
         </table>
