@@ -8,7 +8,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Add Vaccination Center</title>
+	<title>Edit Trainer :: ${trainer.trainerName}</title>
 	<style type="text/css">
 		td{
             border: 1px solid black;
@@ -31,43 +31,70 @@
 </head>
 <body>
     <jsp:include page="header.jsp" ></jsp:include>
-    <h2>Center Information</h2>
+    <h2>Trainer Information</h2>
     <c:if test="${error==true || success==true}">
         ${message}
     </c:if>
 	<div class="formdiv">
-		<form action="/vaccinationcenter/edit" method="POST">
+		<form action="/trainer/edit" method="POST">
 			<table>
 				<thead>
 					<tr>
-						<th colspan="2"><h3>Edit ${center.centerName}</h3></th>
+						<th colspan="2"><h3>Edit - ${trainer.trainerName}</h3></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
 						<td>
-							<label for="center_name">Center Name</label>
+							<label for="trainer_name">Trainer Name</label>
 						</td>
 						<td>
-							<input type="hidden" id="center_id" class="input" value="${center.centerId}" name="center_id">
-							<input type="text" id="center_name" class="input" value="${center.centerName}" name="center_name">
+							<input type="hidden" id="trainer_id" class="input" value="${trainer.trainerId}" name="trainer_id">
+							<input type="text" id="trainer_name" class="input" value="${trainer.trainerName}" name="trainer_name">
 						</td>
 					</tr>
 					<tr>
+                        <td>
+                            <label for="trainer_age">Trainer Age</label>
+                        </td>
+                        <td>
+                            <input type="text" id="trainer_age" class="input" value="${trainer.trainerAge}" name="trainer_age">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="trainer_gender">Trainer Gender</label>
+                        </td>
+                        <td>
+                            <input type="radio" id="trainer_gender_male" name="trainer_gender" value="Male" <c:if test="${subscriber.subscriberGender == \"Male\"}">checked</c:if>>
+                            <label for="trainer_gender_male">Male</label>
+                            <input type="radio" id="trainer_gender_female" name="trainer_gender" value="Female" <c:if test="${subscriber.subscriberGender == \"Female\"}">checked</c:if>>
+                            <label for="trainer_gender_female">Female</label>
+                        </td>
+                    </tr>
+					<tr>
 						<td>
-							<label for="center_city">Center City</label>
+							<label for="trainer_experience">Trainer Experience</label>
 						</td>
 						<td>
-							<select id="center_city" name="center_city" class="input">
-							    <option value="">Select city</option>
-							    <c:forEach items="${cities}" var="city">
-							        <option value="${city}" <c:if test="${city == center.centerCity}">selected</c:if>>
-							            ${city}
+							<select id="trainer_experience" name="trainer_experience" class="input">
+							    <option value="">Select Experience</option>
+							    <c:forEach items="${experience}" var="ex">
+							        <option value="${ex}" <c:if test="${ex == trainer.trainerExperience}">selected</c:if>>
+							            ${ex}
 							        </option>
 							    </c:forEach>
                             </select>
 						</td>
 					</tr>
+					<tr>
+                        <td>
+                            <label for="trainer_address">Trainer Address</label>
+                        </td>
+                        <td>
+                            <input type="text" id="trainer_address" class="input" value="${trainer.trainerAddress}" name="trainer_address">
+                        </td>
+                    </tr>
 					<tr>
 						<td colspan="2"><button type="submit">Submit</button></td>
 					</tr>

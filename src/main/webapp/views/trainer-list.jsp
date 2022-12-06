@@ -5,7 +5,7 @@
 <%@ page isELIgnored="false" %>
 <html>
     <head>
-        <title>${pageTitle}</title>
+        <title>Trainers</title>
         <style type="text/css">
         		table,th,td{
         			border: 1px solid black;
