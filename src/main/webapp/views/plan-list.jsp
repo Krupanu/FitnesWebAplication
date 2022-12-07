@@ -30,7 +30,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Title</th>
-                    <th>Duration</th>
+                    <th>Duration(Months)</th>
                     <th>Fees</th>
                     <th>Action</th>
                 </tr>
@@ -43,9 +43,9 @@
                     <td>${subscriptionPlan.planDuration}</td>
                     <td>${subscriptionPlan.planFees}</td>
                     <td>
-                        <a href="subscriptionPlan/${subscriptionPlan.planId}"><button>View</button></a>
-                        <a href="subscriptionPlan/edit-subscriptionPlan/${subscriptionPlan.planId}"><button>Edit</button></a>
-                        <a href="subscriptionPlan/delete/${subscriptionPlan.planId}"><button>Delete</button></a>
+                        <a href="subscriptionplan/${subscriptionPlan.planId}"><button>View</button></a>
+                        <a href="subscriptionplan/edit-subscriptionPlan/${subscriptionPlan.planId}"><button>Edit</button></a>
+                        <a href="subscriptionplan/delete/${subscriptionPlan.planId}"><button>Delete</button></a>
                     </td>
                 </tr>
                 </c:forEach>

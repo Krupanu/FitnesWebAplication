@@ -59,13 +59,16 @@ public class SubscriptionController {
     }
 
     @RequestMapping(value = "/subscriptionplan/{plan_id}")
-    private SubscriptionPlan getSubscriptionPlan(@PathVariable Long plan_id) {
+    private String getSubscriptionPlan(ModelMap modelMap, @PathVariable Long plan_id) {
         SubscriptionPlan subscriptionPlan = new SubscriptionPlan();
         try {
             subscriptionPlan = subscriptionPlanService.getSubscriptionPlan(plan_id);
-            return subscriptionPlan;
+            modelMap.addAttribute("plan", subscriptionPlan);
+            return "plan-single";
         } catch (Exception ex) {
-            return subscriptionPlan;
+            modelMap.addAttribute("error", true);
+            modelMap.addAttribute("message", ex.getMessage());
+            return "redirect:/subscriptionplan";
         }
     }
 }

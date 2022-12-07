@@ -33,10 +33,12 @@ pageEncoding="UTF-8"%>
     <table>
         <tbody>
             <tr>
-                <th><a href="/citizens">Citizens</a></th>
-                <th><a href="/vaccinationcenter">Vaccination Centers</a></th>
+                <th><a href="/subscriber">Subscribers</a></th>
+                <th><a href="/trainer">Trainers</a></th>
+                <th><a href="/subscriptionplan">Subscription Plans</a></th>
+                <th><a href="/payment">Payments</a></th>
                 <th><a href="/logout">Log Out</a></th>
-                <th colspan="3"><u style="text-align:right">Welcome, ${user_name}</u></th>
+                <th colspan="5"><u style="text-align:right">Welcome, ${user_name}</u></th>
             </tr>
         </tbody>
     </table>

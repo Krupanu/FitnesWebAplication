@@ -5,7 +5,7 @@
 <%@ page isELIgnored="false" %>
 <html>
     <head>
-        <title>${trainer.trainerName}</title>
+        <title>${plan.planTitle}</title>
         <style type="text/css">
         		table,th,td{
         			border: 1px solid black;
@@ -18,41 +18,33 @@
 
     <body>
         <jsp:include page="header.jsp" ></jsp:include>
-        <h2>Trainer Information</h2>
+        <h2>Subscription plan Information</h2>
         <c:if test="${error} eq true">
             <h3>${error}</h3>
         </c:if>
         <table>
     		<thead>
     			<tr>
-    				<th colspan="2"><h2>${trainer.trainerName}</h2></th>
+    				<th colspan="2"><h2>${plan.planTitle}</h2></th>
     			</tr>
     		</thead>
     		<tbody>
     			<tr>
     				<td>ID</td>
-    				<td>${trainer.trainerId}</td>
+    				<td>${plan.planId}</td>
                 </tr>
                 <tr>
-                    <td>Age</td>
-                    <td>${trainer.trainerAge}</td>
+                    <td>Duration(Months)</td>
+                    <td>${plan.planDuration}</td>
                 </tr>
                 <tr>
-                    <td>Gender</td>
-                    <td>${trainer.trainerGender}</td>
-                </tr>
-                <tr>
-                    <td>Experience</td>
-                    <td>${trainer.trainerExperience}</td>
-                </tr>
-                <tr>
-                    <td>Address</td>
-                    <td>${trainer.trainerAddress}</td>
+                    <td>Fees</td>
+                    <td>${plan.planFees}</td>
                 </tr>
     		</tbody>
     	</table>
     	<hr>
-    	<!-- h2>All subscribers of this trainer</h2>
+    	<!-- h2>All subscribers of this plan</h2>
     	<table>
             <thead>
                 <tr>
