@@ -3,12 +3,14 @@ package com.simplilearn.fitnessclubautomation.controller;
 import com.simplilearn.fitnessclubautomation.model.SubscriptionPlan;
 import com.simplilearn.fitnessclubautomation.service.SubscriptionPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
+@Controller
 public class SubscriptionController {
     @Autowired
     SubscriptionPlanService subscriptionPlanService;
@@ -41,13 +43,18 @@ public class SubscriptionController {
     }
 
     @RequestMapping(value = "/subscriptionplan")
-    private List<SubscriptionPlan> getAllSubscriptionPlans() {
+    private String getAllSubscriptionPlans(ModelMap modelMap) {
         List<SubscriptionPlan> subscriptionPlans = new ArrayList<>();
         try {
             subscriptionPlans = subscriptionPlanService.getAllSubscriptionPlans();
-            return subscriptionPlans;
+            modelMap.addAttribute("subscriptionPlans", subscriptionPlans);
+//            modelMap.addAttribute("success", true);
+            modelMap.addAttribute("message", "Total <b>" + subscriptionPlans.size() + "</b> subscription plans found.");
+            return "plan-list";
         } catch (Exception ex) {
-            return subscriptionPlans;
+            modelMap.addAttribute("error", true);
+            modelMap.addAttribute("message", ex.getMessage());
+            return "plan-list";
         }
     }
 
