@@ -21,11 +21,11 @@
         <c:if test="${error==true || success==true}">
             ${message}
         </c:if>
-        <h2>Trainers</h2>
+        <h2>Subscription Plans</h2>
         <table>
             <thead>
                 <tr>
-                    <td colspan="5"><a href="subscriptionPlans/add-new" style="float:right"><button>Add New SubscriptionPlans</button></a></td>
+                    <td colspan="5"><a href="subscriptionplan/add-new" style="float:right"><button>Add New SubscriptionPlans</button></a></td>
                 </tr>
                 <tr>
                     <th>ID</th>
@@ -44,7 +44,7 @@
                     <td>${subscriptionPlan.planFees}</td>
                     <td>
                         <a href="subscriptionplan/${subscriptionPlan.planId}"><button>View</button></a>
-                        <a href="subscriptionplan/edit-subscriptionPlan/${subscriptionPlan.planId}"><button>Edit</button></a>
+                        <a href="subscriptionplan/edit-plan/${subscriptionPlan.planId}"><button>Edit</button></a>
                         <a href="subscriptionplan/delete/${subscriptionPlan.planId}"><button>Delete</button></a>
                     </td>
                 </tr>

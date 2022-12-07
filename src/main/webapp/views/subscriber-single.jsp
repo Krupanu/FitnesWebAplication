@@ -51,6 +51,14 @@
                     <td>${subscriber.subscriberFeesPaid}</td>
                 </tr>
                 <tr>
+                    <td>Allocated Traner</td>
+                    <td><a href="/trainer/${subscriber.trainer.trainerId}">${subscriber.trainer.trainerName}</a></td>
+                </tr>
+                <tr>
+                    <td>Subscription Plan</td>
+                    <td><a href="/subscriptionplan/${subscriber.subscriptionPlan.planId}">${subscriber.subscriptionPlan.planTitle}</a></td>
+                </tr>
+                <tr>
                     <td>Subscriber Status</td>
                     <td>
                         <c:if test="${subscriber.subscriberStatus == false}">
