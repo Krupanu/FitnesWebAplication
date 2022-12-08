@@ -6,12 +6,14 @@ import com.simplilearn.fitnessclubautomation.service.PaymentService;
 import com.simplilearn.fitnessclubautomation.service.SubscriberService;
 import com.simplilearn.fitnessclubautomation.service.SubscriptionPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
+@Controller
 public class PaymentController {
     @Autowired
     PaymentService paymentService;
@@ -59,24 +61,31 @@ public class PaymentController {
 //    }
 
     @RequestMapping(value = "/payment")
-    private List<Payment> getAllPayments() {
+    private String getAllPayments(ModelMap modelMap) {
         List<Payment> payments = new ArrayList<>();
         try {
             payments = paymentService.getAllPayments();
-            return payments;
+            modelMap.addAttribute("payments", payments);
+            modelMap.addAttribute("message", "Total <b>" + payments.size() + "</b> payment records found.");
+
         } catch (Exception ex) {
-            return payments;
+            modelMap.addAttribute("error", true);
+            modelMap.addAttribute("message", ex.getMessage());
         }
+        return "payment-list";
     }
 
     @RequestMapping(value = "/payment/{payment_id}")
-    private Payment getPayment(@PathVariable Long payment_id) {
+    private String getPayment(ModelMap modelMap, @PathVariable Long payment_id) {
         Payment payment = new Payment();
         try {
             payment = paymentService.getPayment(payment_id);
-            return payment;
+            modelMap.addAttribute("payment", payment);
+            return "payment-single";
         } catch (Exception ex) {
-            return payment;
+            modelMap.addAttribute("error", true);
+            modelMap.addAttribute("message", ex.getMessage());
+            return "redirect:/payment-list";
         }
     }
 }
