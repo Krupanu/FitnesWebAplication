@@ -32,7 +32,7 @@
                     <th>Name</th>
                     <th>Age</th>
                     <th>Gender</th>
-                    <th>Experience</th>
+                    <th>Experience (Years)</th>
                     <th>Address</th>
                     <th>Action</th>
                 </tr>

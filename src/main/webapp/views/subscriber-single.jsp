@@ -51,7 +51,7 @@
                     <td>${subscriber.subscriberFeesPaid}</td>
                 </tr>
                 <tr>
-                    <td>Allocated Traner</td>
+                    <td>Allocated Trainer</td>
                     <td><a href="/trainer/${subscriber.trainer.trainerId}">${subscriber.trainer.trainerName}</a></td>
                 </tr>
                 <tr>

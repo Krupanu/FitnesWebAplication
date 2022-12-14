@@ -18,7 +18,7 @@
 
     <body>
         <jsp:include page="header.jsp" ></jsp:include>
-        <h2>Subscription plan Information</h2>
+        <h2>Subscription Plan Information</h2>
         <c:if test="${error} eq true">
             <h3>${error}</h3>
         </c:if>

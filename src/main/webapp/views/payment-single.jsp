@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page isELIgnored="false" %>
-<html>``
+<html>
     <head>
         <title>Payment :: ${payment.subscriber.subscriberName}</title>
         <style type="text/css">

@@ -10,7 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -22,20 +24,43 @@ public class PaymentController {
     @Autowired
     SubscriptionPlanService subscriptionPlanService;
 
+    @RequestMapping(value = "/payment/add-new")
+    private String addPayment(ModelMap modelMap) {
+        String[] payment_mode = {
+                "Cash",
+                "Credit/Debit Card",
+                "UPI"
+        };
+        List<Subscriber> subscribers = subscriberService.getAllSubscribers();
+        modelMap.addAttribute("subscribers", subscribers);
+        modelMap.addAttribute("payment_mode", payment_mode);
+        return "add-payment";
+    }
+
     @RequestMapping(value = "/payment/add", method = RequestMethod.POST)
-    private Payment addPayment(@RequestParam(value = "payment_amount", required = true) int payment_amount,
-                               @RequestParam(value = "payment_date", required = true) String payment_date,
-                               @RequestParam(value = "payment_mode", required = true) String payment_mode,
-                               @RequestParam(value = "payment_subscriber_id", required = true) Long payment_subscriber_id
+    private String addPayment(ModelMap modelMap,
+                              @RequestParam(value = "payment_amount", required = true) int payment_amount,
+                              @RequestParam(value = "payment_mode", required = true) String payment_mode,
+                              @RequestParam(value = "payment_subscriber_id", required = true) Long payment_subscriber_id
     ) {
         Subscriber s = subscriberService.getSubscriber(payment_subscriber_id);
-        /*Long planId = s.getSubscriptionPlan().getPlanId();
+        Long planId = s.getSubscriptionPlan().getPlanId();
         int planfees = subscriptionPlanService.getSubscriptionPlan(planId).getPlanFees();
         int paid = s.getSubscriberFeesPaid();
         int total = paid + payment_amount;
-        if (total > planfees) {}*/
+        if (total > planfees) {
+            modelMap.addAttribute("error", true);
+            modelMap.addAttribute("message", "Payment amount exceeding the actual fees limit.");
+            return "add-payment";
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        String payment_date = sdf.format(date);
         Payment payment = new Payment(payment_amount, payment_date, payment_mode, s);
-        return paymentService.addPayment(payment);
+        paymentService.addPayment(payment);
+        s.setSubscriberFeesPaid(total);
+        subscriberService.addSubscriber(s);
+        return "redirect:/payment";
     }
 
     @RequestMapping(value = "/payment/edit", method = RequestMethod.POST)
