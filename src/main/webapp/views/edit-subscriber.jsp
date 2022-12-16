@@ -8,7 +8,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Edit Subscriber</title>
+	<title>Edit Subscriber :: ${subscriber.subscriberName}</title>
 	<style type="text/css">
 		td{
             border: 1px solid black;

@@ -8,7 +8,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Add Payments</title>
+	<title>Edit Payment :: ${payment.subscriber.subscriberName}</title>
 	<style type="text/css">
         td{
             border: 1px solid black;
@@ -37,11 +37,11 @@
         ${message}
     </c:if>
 	<div class="formdiv">
-		<form action="add" method="POST">
+		<form action="/payment/edit" method="POST">
 			<table>
 				<thead>
 					<tr>
-						<th colspan="2"><h3>Record a New Payment</h3></th>
+						<th colspan="2"><h3>Edit Payment</h3></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -50,11 +50,16 @@
                             <label for="payment_subscriber_id">Payment By</label>
                         </td>
                         <td>
-                            <select id="payment_subscriber_id" name="payment_subscriber_id">
+                            <input type="hidden" value="${payment_id}" name = "payment_id">
+                            <input type="hidden" value="${payment.subscriber.subscriberId}" name = "payment_subscriber_id">
+                            <label>${payment.subscriber.subscriberName}</label>
+                            <!-- select id="payment_subscriber_id" name="payment_subscriber_id">
                                 <c:forEach items="${subscribers}" var="subscriber">
-                                <option value=${subscriber.subscriberId}>${subscriber.subscriberName}</option>
+                                    <option value="${subscriber.subscriberId}" <c:if test="${subscriber.subscriberId == payment.subscriber.subscriberId}">selected</c:if>>
+                                        ${subscriber.subscriberName}
+                                    </option>
                                 </c:forEach>
-                            </select>
+                            </select -->
                         </td>
                     </tr>
                     <tr>
@@ -62,9 +67,21 @@
 							<label for="payment_amount">Paid Amount</label>
 						</td>
 						<td>
-							<input type="number" id="payment_amount" class="input" name="payment_amount">
+							<input type="hidden" id="old_payment_amount" class="input" name="old_payment_amount" value="${payment.paidAmount}">
+							<input type="number" id="payment_amount" class="input" name="payment_amount" value="${payment.paidAmount}">
+							<br><label>Out of INR. ${payment.subscriber.subscriptionPlan.planFees}</label>
 						</td>
 					</tr>
+
+					<tr>
+                        <td>
+                            <label for="payment_date">Payment Date</label>
+                        </td>
+                        <td>
+                            <input type="date" id="payment_date" class="input" name="payment_date" value="${payment.paymentDate}">
+                        </td>
+                    </tr>
+
 					<tr>
                         <td>
                             <label for="payment_mode">Payment Mode</label>
@@ -72,7 +89,9 @@
                         <td>
                             <select id="payment_mode" name="payment_mode">
                                 <c:forEach items="${payment_mode}" var="mode">
-                                <option value=${mode}>${mode}</option>
+                                    <option value="${mode}" <c:if test="${mode == payment.paymentMode}">selected</c:if>>
+                                        ${mode}
+                                    </option>
                                 </c:forEach>
                             </select>
                         </td>

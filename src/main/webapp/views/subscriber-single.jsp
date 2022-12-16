@@ -5,7 +5,7 @@
 <%@ page isELIgnored="false" %>
 <html>
     <head>
-        <title>Subscriber::${subscriber.subscriberName}</title>
+        <title>Subscriber :: ${subscriber.subscriberName}</title>
         <style type="text/css">
         		table,th,td{
         			border: 1px solid black;

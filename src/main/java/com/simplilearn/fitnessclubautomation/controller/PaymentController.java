@@ -8,7 +8,10 @@ import com.simplilearn.fitnessclubautomation.service.SubscriptionPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,10 +48,10 @@ public class PaymentController {
     ) {
         Subscriber s = subscriberService.getSubscriber(payment_subscriber_id);
         Long planId = s.getSubscriptionPlan().getPlanId();
-        int planfees = subscriptionPlanService.getSubscriptionPlan(planId).getPlanFees();
+        int planFees = subscriptionPlanService.getSubscriptionPlan(planId).getPlanFees();
         int paid = s.getSubscriberFeesPaid();
         int total = paid + payment_amount;
-        if (total > planfees) {
+        if (total > planFees) {
             modelMap.addAttribute("error", true);
             modelMap.addAttribute("message", "Payment amount exceeding the actual fees limit.");
             return "add-payment";
@@ -63,16 +66,53 @@ public class PaymentController {
         return "redirect:/payment";
     }
 
+    @RequestMapping(value = "/payment/edit-payment/{payment_id}")
+    private String editPayment(ModelMap modelMap, @PathVariable Long payment_id) {
+        Payment payment = new Payment();
+        try {
+            payment = paymentService.getPayment(payment_id);
+            modelMap.addAttribute("payment", payment);
+            String[] payment_mode = {
+                    "Cash",
+                    "Credit/Debit Card",
+                    "UPI"
+            };
+            modelMap.addAttribute("payment_mode", payment_mode);
+            List<Subscriber> subscribers = subscriberService.getAllSubscribers();
+            modelMap.addAttribute("subscribers", subscribers);
+            return "edit-payment";
+        } catch (Exception ex) {
+            modelMap.addAttribute("error", true);
+            modelMap.addAttribute("message", ex.getMessage());
+            return "redirect:/payment-list";
+        }
+
+    }
+
     @RequestMapping(value = "/payment/edit", method = RequestMethod.POST)
-    private Payment editPayment(@RequestParam(value = "payment_id", required = true) Long payment_id,
-                                @RequestParam(value = "payment_amount", required = true) int payment_amount,
-                                @RequestParam(value = "payment_date", required = true) String payment_date,
-                                @RequestParam(value = "payment_mode", required = true) String payment_mode,
-                                @RequestParam(value = "payment_subscriber_id", required = true) Long payment_subscriber_id
+    private String editPayment(ModelMap modelMap,
+                               @RequestParam(value = "payment_id", required = true) Long payment_id,
+                               @RequestParam(value = "payment_amount", required = true) int payment_amount,
+                               @RequestParam(value = "old_payment_amount", required = true) int old_payment_amount,
+                               @RequestParam(value = "payment_date", required = true) String payment_date,
+                               @RequestParam(value = "payment_mode", required = true) String payment_mode,
+                               @RequestParam(value = "payment_subscriber_id", required = true) Long payment_subscriber_id
     ) {
+//        System.out.println(payment_id+","+old_payment_amount+","+payment_amount+","+payment_date+","+payment_mode+","+payment_subscriber_id+",");
+
         Subscriber subscriber = subscriberService.getSubscriber(payment_subscriber_id);
+        int old_total = subscriber.getSubscriberFeesPaid() - old_payment_amount;
+        int new_total = old_total + payment_amount;
+        Long planId = subscriber.getSubscriptionPlan().getPlanId();
+        int planFees = subscriptionPlanService.getSubscriptionPlan(planId).getPlanFees();
+        if (new_total > planFees) {
+            modelMap.addAttribute("error", true);
+            modelMap.addAttribute("message", "Payment amount exceeding the actual fees limit.");
+            return "edit-payment";
+        }
         Payment payment = new Payment(payment_id, payment_amount, payment_date, payment_mode, subscriber);
-        return paymentService.addPayment(payment);
+        paymentService.addPayment(payment);
+        return "redirect:/payment";
     }
 
 //    @RequestMapping(value = "/payment/delete/{payment_id}", method = RequestMethod.GET)

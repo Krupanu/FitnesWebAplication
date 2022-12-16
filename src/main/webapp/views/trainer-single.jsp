@@ -5,7 +5,7 @@
 <%@ page isELIgnored="false" %>
 <html>
     <head>
-        <title>${trainer.trainerName}</title>
+        <title>Trainer :: ${trainer.trainerName}</title>
         <style type="text/css">
         		table,th,td{
         			border: 1px solid black;
