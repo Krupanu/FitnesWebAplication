@@ -43,25 +43,5 @@
                 </tr>
     		</tbody>
     	</table>
-    	<hr>
-    	<!-- h2>All subscribers of this plan</h2>
-    	<table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach items="${citizens}" var="citizen">
-                <tr>
-                    <td>${citizen.citizenId}</td>
-                    <td>${citizen.citizenName}</td>
-                    <td><a href="../citizens/${citizen.citizenId}">View</a></td>
-                </tr>
-                </c:forEach>
-            </tbody>
-        </table-->
     </body>
 </html>
