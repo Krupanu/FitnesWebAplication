@@ -29,7 +29,7 @@
                 </tr>
                 <tr>
                     <th>ID</th>
-                    <th>Amount</th>
+                    <th>Amount (INR)</th>
                     <th>Date</th>
                     <th>Mode Of Payment</th>
                     <th>Paid By</th>
@@ -47,7 +47,6 @@
                     <td>
                         <a href="payment/${payment.paymentId}"><button>View</button></a>
                         <a href="payment/edit-payment/${payment.paymentId}"><button>Edit</button></a>
-                        <a href="payment/delete/${payment.paymentId}"><button>Delete</button></a>
                     </td>
                 </tr>
                 </c:forEach>

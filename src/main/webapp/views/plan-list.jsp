@@ -41,7 +41,7 @@
                     <td>${subscriptionPlan.planId}</td>
                     <td>${subscriptionPlan.planTitle}</td>
                     <td>${subscriptionPlan.planDuration}</td>
-                    <td>${subscriptionPlan.planFees}</td>
+                    <td>INR. ${subscriptionPlan.planFees}</td>
                     <td>
                         <a href="subscriptionplan/${subscriptionPlan.planId}"><button>View</button></a>
                         <a href="subscriptionplan/edit-plan/${subscriptionPlan.planId}"><button>Edit</button></a>

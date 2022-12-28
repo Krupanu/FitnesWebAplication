@@ -35,7 +35,7 @@
                 </tr>
                 <tr>
                     <td>Paid Amount</td>
-                    <td>${payment.paidAmount}</td>
+                    <td>INR. ${payment.paidAmount}</td>
                 </tr>
                 <tr>
                     <td>Payment Date</td>

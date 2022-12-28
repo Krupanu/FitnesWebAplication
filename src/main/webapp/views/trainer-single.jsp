@@ -35,7 +35,7 @@
                 </tr>
                 <tr>
                     <td>Age</td>
-                    <td>${trainer.trainerAge}</td>
+                    <td>${trainer.trainerAge} Years</td>
                 </tr>
                 <tr>
                     <td>Gender</td>
@@ -43,7 +43,7 @@
                 </tr>
                 <tr>
                     <td>Experience</td>
-                    <td>${trainer.trainerExperience}</td>
+                    <td>${trainer.trainerExperience} Years</td>
                 </tr>
                 <tr>
                     <td>Address</td>

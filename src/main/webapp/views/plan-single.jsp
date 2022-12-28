@@ -5,7 +5,7 @@
 <%@ page isELIgnored="false" %>
 <html>
     <head>
-        <title>${plan.planTitle}</title>
+        <title>Subscription Plan :: ${plan.planTitle}</title>
         <style type="text/css">
         		table,th,td{
         			border: 1px solid black;
@@ -39,7 +39,7 @@
                 </tr>
                 <tr>
                     <td>Fees</td>
-                    <td>${plan.planFees}</td>
+                    <td>INR. ${plan.planFees}</td>
                 </tr>
     		</tbody>
     	</table>

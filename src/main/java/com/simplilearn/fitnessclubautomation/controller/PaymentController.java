@@ -35,8 +35,13 @@ public class PaymentController {
                 "UPI"
         };
         List<Subscriber> subscribers = subscriberService.getAllSubscribers();
-        modelMap.addAttribute("subscribers", subscribers);
-        modelMap.addAttribute("payment_mode", payment_mode);
+        if (subscribers.size() > 0) {
+            modelMap.addAttribute("subscribers", subscribers);
+            modelMap.addAttribute("payment_mode", payment_mode);
+        } else {
+            modelMap.addAttribute("error", true);
+            modelMap.addAttribute("message", "No subscriber found for initiating payment.<br>");
+        }
         return "add-payment";
     }
 
@@ -53,7 +58,7 @@ public class PaymentController {
         int total = paid + payment_amount;
         if (total > planFees) {
             modelMap.addAttribute("error", true);
-            modelMap.addAttribute("message", "Payment amount exceeding the actual fees limit.");
+            modelMap.addAttribute("message", "Payment amount exceeding the actual fees limit.<br>");
             return "add-payment";
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -86,7 +91,6 @@ public class PaymentController {
             modelMap.addAttribute("message", ex.getMessage());
             return "redirect:/payment-list";
         }
-
     }
 
     @RequestMapping(value = "/payment/edit", method = RequestMethod.POST)
@@ -98,20 +102,29 @@ public class PaymentController {
                                @RequestParam(value = "payment_mode", required = true) String payment_mode,
                                @RequestParam(value = "payment_subscriber_id", required = true) Long payment_subscriber_id
     ) {
-//        System.out.println(payment_id+","+old_payment_amount+","+payment_amount+","+payment_date+","+payment_mode+","+payment_subscriber_id+",");
-
         Subscriber subscriber = subscriberService.getSubscriber(payment_subscriber_id);
         int old_total = subscriber.getSubscriberFeesPaid() - old_payment_amount;
         int new_total = old_total + payment_amount;
-        Long planId = subscriber.getSubscriptionPlan().getPlanId();
-        int planFees = subscriptionPlanService.getSubscriptionPlan(planId).getPlanFees();
+//        Long planId = subscriber.getSubscriptionPlan().getPlanId();
+//        int planFees = subscriptionPlanService.getSubscriptionPlan(planId).getPlanFees();
+        int planFees = subscriber.getSubscriptionPlan().getPlanFees();
+
+        System.out.println("FEES PAID - " + subscriber.getSubscriberFeesPaid());
+        System.out.println("PAYMENT AMOUNT - " + payment_amount);
+        System.out.println("PLAN FEES - " + planFees);
+        System.out.println("OLD TOTAL - " + old_total);
+        System.out.println("NEW TOTAL - " + new_total);
+
         if (new_total > planFees) {
             modelMap.addAttribute("error", true);
-            modelMap.addAttribute("message", "Payment amount exceeding the actual fees limit.");
+            modelMap.addAttribute("message", "Payment amount exceeding the actual fees limit.<br>");
             return "edit-payment";
         }
+
         Payment payment = new Payment(payment_id, payment_amount, payment_date, payment_mode, subscriber);
         paymentService.addPayment(payment);
+        subscriber.setSubscriberFeesPaid(new_total);
+        subscriberService.addSubscriber(subscriber);
         return "redirect:/payment";
     }
 
@@ -135,7 +148,7 @@ public class PaymentController {
 
         } catch (Exception ex) {
             modelMap.addAttribute("error", true);
-            modelMap.addAttribute("message", ex.getMessage());
+            modelMap.addAttribute("message", ex.getMessage() + "<br>");
         }
         return "payment-list";
     }
@@ -149,7 +162,7 @@ public class PaymentController {
             return "payment-single";
         } catch (Exception ex) {
             modelMap.addAttribute("error", true);
-            modelMap.addAttribute("message", ex.getMessage());
+            modelMap.addAttribute("message", ex.getMessage() + "<br>");
             return "redirect:/payment-list";
         }
     }
