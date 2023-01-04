@@ -3,16 +3,16 @@ package com.simplilearn.fitnessclubautomation.controller;
 import com.simplilearn.fitnessclubautomation.model.Admin;
 import com.simplilearn.fitnessclubautomation.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-@RestController
+@Controller
 public class AdminController {
     @Autowired
     AdminService adminService;
@@ -30,6 +30,7 @@ public class AdminController {
                          @RequestParam(value = "user_password", required = true) String user_password) {
         modelMap.addAttribute("pagetitle", "Login");
         Admin admin = adminService.login(user_email, user_password);
+//        System.out.println("Admin IS - " + admin.getAdminName());
         if (admin == null) {
             modelMap.addAttribute("error", true);
             modelMap.addAttribute("message", "Invalid Credentials! Please try again.");
