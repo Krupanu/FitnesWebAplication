@@ -9,5 +9,8 @@ public interface AdminRepository extends CrudRepository<Admin, Long> {
     @Query("SELECT admin FROM Admin admin WHERE admin.adminEmail=:adminEmail AND admin.adminPassword=:adminPassword")
     Admin findByAdminEmailAndAdminPassword(@Param("adminEmail") String adminEmail, @Param("adminPassword") String adminPassword);
 
+    @Query("select a from Admin a where a.adminEmail = ?1 and a.adminPassword = ?2")
+    Admin login(String adminEmail, String adminPassword);
+
 
 }

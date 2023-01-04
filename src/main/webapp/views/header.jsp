@@ -38,7 +38,7 @@ pageEncoding="UTF-8"%>
                 <th><a href="/subscriptionplan">Subscription Plans</a></th>
                 <th><a href="/payment">Payments</a></th>
                 <th><a href="/logout">Log Out</a></th>
-                <th colspan="5"><u style="text-align:right">Welcome, ${user_name}</u></th>
+                <th colspan="5"><u style="text-align:right">Welcome, ${adminName}</u></th>
             </tr>
         </tbody>
     </table>

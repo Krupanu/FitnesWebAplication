@@ -15,7 +15,7 @@ public class AdminService {
     }
 
     public Admin login(String adminEmail, String adminPassword) {
-        Admin admin = adminRepository.findByAdminEmailAndAdminPassword(adminEmail, adminPassword);
+        Admin admin = adminRepository.login(adminEmail, adminPassword);
         return admin;
     }
 }

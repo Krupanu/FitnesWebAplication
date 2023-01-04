@@ -51,7 +51,7 @@
                         </td>
                         <td>
                             <input type="hidden" id="subscriber_id" class="input" name="subscriber_id" value="${subscriber.subscriberId}">
-                            <input type="text" id="subscriber_name" class="input" name="subscriber_name" value="${subscriber.subscriberName}">
+                            <input type="text" required id="subscriber_name" class="input" name="subscriber_name" value="${subscriber.subscriberName}">
                         </td>
                     </tr>
                     <tr>
@@ -59,7 +59,7 @@
                             <label for="subscriber_age">Subscriber Age</label>
                         </td>
                         <td>
-                            <input type="text" id="subscriber_age" class="input" name="subscriber_age" value="${subscriber.subscriberAge}">
+                            <input type="text" required id="subscriber_age" class="input" name="subscriber_age" value="${subscriber.subscriberAge}">
                         </td>
                     </tr>
                     <tr>
@@ -67,7 +67,7 @@
                             <label for="subscriber_address">Subscriber Address</label>
                         </td>
                         <td>
-                            <textarea id="subscriber_address" class="input" name="subscriber_address" value="${subscriber.subscriberAge}">${subscriber.subscriberAddress}</textarea>
+                            <textarea id="subscriber_address" required class="input" name="subscriber_address" value="${subscriber.subscriberAge}">${subscriber.subscriberAddress}</textarea>
                         </td>
                     </tr>
                     <tr>
@@ -75,9 +75,9 @@
                             <label for="subscriber_gender">Subscriber Gender</label>
                         </td>
                         <td>
-                            <input type="radio" id="subscriber_gender_male" name="subscriber_gender" value="Male" <c:if test="${subscriber.subscriberGender == \"Male\"}">checked</c:if>>
+                            <input type="radio" required id="subscriber_gender_male" name="subscriber_gender" value="Male" <c:if test="${subscriber.subscriberGender == \"Male\"}">checked</c:if>>
                             <label for="subscriber_gender_male">Male</label>
-                            <input type="radio" id="subscriber_gender_female" name="subscriber_gender" value="Female" <c:if test="${subscriber.subscriberGender == \"Female\"}">checked</c:if>>
+                            <input type="radio" required id="subscriber_gender_female" name="subscriber_gender" value="Female" <c:if test="${subscriber.subscriberGender == \"Female\"}">checked</c:if>>
                             <label for="subscriber_gender_female">Female</label>
                         </td>
                     </tr>
@@ -87,7 +87,7 @@
                         </td>
                         <td>
                             <select id="subscriber_trainer" name="subscriber_trainer_id">
-                                <option value="">Select Trainer</option>
+                                <option value="0">Select Trainer</option>
                                 <c:forEach items="${trainers}" var="trainer">
                                     <option value="${trainer.trainerId}" <c:if test="${trainer.trainerId == subscriber.trainer.trainerId}">selected</c:if>>
                                         ${trainer.trainerName}
@@ -102,7 +102,7 @@
                         </td>
                         <td>
                             <select id="subscription_plan_id" name="subscription_plan_id">
-                                <option value="">Select Subscription Plan</option>
+                                <option value="0">Select Subscription Plan</option>
                                 <c:forEach items="${subscriptionPlans}" var="plan">
                                     <option value="${plan.planId}" <c:if test="${plan.planId == subscriber.subscriptionPlan.planId}">selected</c:if>>
                                         ${plan.planTitle}
