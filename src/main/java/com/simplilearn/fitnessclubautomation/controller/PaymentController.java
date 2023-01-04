@@ -128,16 +128,6 @@ public class PaymentController {
         return "redirect:/payment";
     }
 
-//    @RequestMapping(value = "/payment/delete/{payment_id}", method = RequestMethod.GET)
-//    private Boolean deletePayment(@PathVariable Long payment_id) {
-//        try {
-//            paymentService.deletePayment(payment_id);
-//            return true;
-//        } catch (Exception ex) {
-//            return false;
-//        }
-//    }
-
     @RequestMapping(value = "/payment")
     private String getAllPayments(ModelMap modelMap) {
         List<Payment> payments = new ArrayList<>();

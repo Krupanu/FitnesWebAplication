@@ -13,4 +13,8 @@ public class AdminService {
     public Admin getAdmin(Long adminId) {
         return adminRepository.findById(adminId).get();
     }
+
+    public Admin login(String adminEmail, String adminPassword) {
+        return adminRepository.findByAdminEmailAndAdminPassword(adminEmail, adminPassword);
+    }
 }

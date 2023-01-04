@@ -57,7 +57,7 @@
 					</tr>
 					<tr>
 						<td><button type="submit">Login</button></td>
-						<td><a href="/registration"><button type="button">Registration</button></a></td>
+						<!--td><a href="/registration"><button type="button">Registration</button></a></td-->
 					</tr>
 				</tbody>
 			</table>
