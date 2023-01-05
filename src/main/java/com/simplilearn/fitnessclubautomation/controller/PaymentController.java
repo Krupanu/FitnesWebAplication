@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,12 +30,12 @@ public class PaymentController {
     SubscriptionPlanService subscriptionPlanService;
 
     @RequestMapping(value = "/payment/add-new")
-    private String addPayment(ModelMap modelMap) {
-        String[] payment_mode = {
-                "Cash",
-                "Credit/Debit Card",
-                "UPI"
-        };
+    private String addPayment(ModelMap modelMap, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("adminId") == null) {
+            return "redirect:/";
+        }
+        String[] payment_mode = {"Cash", "Credit/Debit Card", "UPI"};
         List<Subscriber> subscribers = subscriberService.getAllSubscribers();
         if (subscribers.size() > 0) {
             modelMap.addAttribute("subscribers", subscribers);
@@ -46,11 +48,11 @@ public class PaymentController {
     }
 
     @RequestMapping(value = "/payment/add", method = RequestMethod.POST)
-    private String addPayment(ModelMap modelMap,
-                              @RequestParam(value = "payment_amount", required = true) int payment_amount,
-                              @RequestParam(value = "payment_mode", required = true) String payment_mode,
-                              @RequestParam(value = "payment_subscriber_id", required = true) Long payment_subscriber_id
-    ) {
+    private String addPayment(ModelMap modelMap, HttpServletRequest request, @RequestParam(value = "payment_amount", required = true) int payment_amount, @RequestParam(value = "payment_mode", required = true) String payment_mode, @RequestParam(value = "payment_subscriber_id", required = true) Long payment_subscriber_id) {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("adminId") == null) {
+            return "redirect:/";
+        }
         Subscriber s = subscriberService.getSubscriber(payment_subscriber_id);
         Long planId = s.getSubscriptionPlan().getPlanId();
         int planFees = subscriptionPlanService.getSubscriptionPlan(planId).getPlanFees();
@@ -72,16 +74,16 @@ public class PaymentController {
     }
 
     @RequestMapping(value = "/payment/edit-payment/{payment_id}")
-    private String editPayment(ModelMap modelMap, @PathVariable Long payment_id) {
+    private String editPayment(ModelMap modelMap, HttpServletRequest request, @PathVariable Long payment_id) {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("adminId") == null) {
+            return "redirect:/";
+        }
         Payment payment = new Payment();
         try {
             payment = paymentService.getPayment(payment_id);
             modelMap.addAttribute("payment", payment);
-            String[] payment_mode = {
-                    "Cash",
-                    "Credit/Debit Card",
-                    "UPI"
-            };
+            String[] payment_mode = {"Cash", "Credit/Debit Card", "UPI"};
             modelMap.addAttribute("payment_mode", payment_mode);
             List<Subscriber> subscribers = subscriberService.getAllSubscribers();
             modelMap.addAttribute("subscribers", subscribers);
@@ -94,27 +96,23 @@ public class PaymentController {
     }
 
     @RequestMapping(value = "/payment/edit", method = RequestMethod.POST)
-    private String editPayment(ModelMap modelMap,
-                               @RequestParam(value = "payment_id", required = true) Long payment_id,
-                               @RequestParam(value = "payment_amount", required = true) int payment_amount,
-                               @RequestParam(value = "old_payment_amount", required = true) int old_payment_amount,
-                               @RequestParam(value = "payment_date", required = true) String payment_date,
-                               @RequestParam(value = "payment_mode", required = true) String payment_mode,
-                               @RequestParam(value = "payment_subscriber_id", required = true) Long payment_subscriber_id
-    ) {
+    private String editPayment(ModelMap modelMap, HttpServletRequest request, @RequestParam(value = "payment_id", required = true) Long payment_id, @RequestParam(value = "payment_amount", required = true) int payment_amount, @RequestParam(value = "old_payment_amount", required = true) int old_payment_amount, @RequestParam(value = "payment_date", required = true) String payment_date, @RequestParam(value = "payment_mode", required = true) String payment_mode, @RequestParam(value = "payment_subscriber_id", required = true) Long payment_subscriber_id) {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("adminId") == null) {
+            return "redirect:/";
+        }
         Subscriber subscriber = subscriberService.getSubscriber(payment_subscriber_id);
         int old_total = subscriber.getSubscriberFeesPaid() - old_payment_amount;
         int new_total = old_total + payment_amount;
-//        Long planId = subscriber.getSubscriptionPlan().getPlanId();
-//        int planFees = subscriptionPlanService.getSubscriptionPlan(planId).getPlanFees();
         int planFees = subscriber.getSubscriptionPlan().getPlanFees();
 
-        System.out.println("FEES PAID - " + subscriber.getSubscriberFeesPaid());
+
+        /*System.out.println("FEES PAID - " + subscriber.getSubscriberFeesPaid());
         System.out.println("PAYMENT AMOUNT - " + payment_amount);
         System.out.println("PLAN FEES - " + planFees);
         System.out.println("OLD TOTAL - " + old_total);
         System.out.println("NEW TOTAL - " + new_total);
-
+*/
         if (new_total > planFees) {
             modelMap.addAttribute("error", true);
             modelMap.addAttribute("message", "Payment amount exceeding the actual fees limit.<br>");
@@ -129,13 +127,16 @@ public class PaymentController {
     }
 
     @RequestMapping(value = "/payment")
-    private String getAllPayments(ModelMap modelMap) {
+    private String getAllPayments(ModelMap modelMap, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("adminId") == null) {
+            return "redirect:/";
+        }
         List<Payment> payments = new ArrayList<>();
         try {
             payments = paymentService.getAllPayments();
             modelMap.addAttribute("payments", payments);
             modelMap.addAttribute("message", "Total <b>" + payments.size() + "</b> payment records found.");
-
         } catch (Exception ex) {
             modelMap.addAttribute("error", true);
             modelMap.addAttribute("message", ex.getMessage() + "<br>");
@@ -144,7 +145,11 @@ public class PaymentController {
     }
 
     @RequestMapping(value = "/payment/{payment_id}")
-    private String getPayment(ModelMap modelMap, @PathVariable Long payment_id) {
+    private String getPayment(ModelMap modelMap, HttpServletRequest request, @PathVariable Long payment_id) {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("adminId") == null) {
+            return "redirect:/";
+        }
         Payment payment = new Payment();
         try {
             payment = paymentService.getPayment(payment_id);

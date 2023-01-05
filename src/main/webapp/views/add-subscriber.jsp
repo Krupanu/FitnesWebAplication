@@ -50,7 +50,7 @@
                             <label for="subscriber_name">Subscriber Name</label>
                         </td>
                         <td>
-                            <input type="text" id="subscriber_name" class="input" name="subscriber_name">
+                            <input type="text" id="subscriber_name" class="input" name="subscriber_name" required>
                         </td>
                     </tr>
                     <tr>
@@ -58,7 +58,7 @@
 							<label for="subscriber_age">Subscriber Age</label>
 						</td>
 						<td>
-							<input type="text" id="subscriber_age" class="input" name="subscriber_age">
+							<input type="text" id="subscriber_age" class="input" name="subscriber_age" required>
 						</td>
 					</tr>
 					<tr>
@@ -77,7 +77,7 @@
                             <label for="subscriber_address">Subscriber Address</label>
                         </td>
                         <td>
-                            <textarea id="subscriber_address" class="input" style="height: 200px" name="subscriber_address"></textarea>
+                            <textarea id="subscriber_address" class="input" style="height: 200px" required name="subscriber_address"></textarea>
                         </td>
                     </tr>
 					<tr>
@@ -85,7 +85,7 @@
 							<label for="subscriber_trainer_id">Select Trainer</label>
 						</td>
 						<td>
-							<select id="subscriber_trainer_id" name="subscriber_trainer_id" class="input">
+							<select id="subscriber_trainer_id" name="subscriber_trainer_id" class="input" required>
                                 <option value="">Select Trainer</option>
                                 <c:forEach items="${trainers}" var="trainer">
                                     <option value="${trainer.trainerId}">${trainer.trainerName}</option>
@@ -98,7 +98,7 @@
                             <label for="subscription_plan_id">Subscription Plan</label>
                         </td>
                         <td>
-                            <select id="subscription_plan_id" name="subscription_plan_id" class="input">
+                            <select id="subscription_plan_id" name="subscription_plan_id" class="input" required>
                                 <c:forEach items="${subscriptionPlans}" var="plan">
                                     <option value="${plan.planId}">
                                         ${plan.planTitle}

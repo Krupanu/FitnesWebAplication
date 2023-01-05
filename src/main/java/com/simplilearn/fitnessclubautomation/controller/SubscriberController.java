@@ -29,7 +29,11 @@ public class SubscriberController {
     private SubscriptionPlanService subscriptionPlanService;
 
     @RequestMapping(value = "/subscriber/add-new")
-    private String addSubscriber(ModelMap modelMap) {
+    private String addSubscriber(ModelMap modelMap, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("adminId") == null) {
+            return "redirect:/";
+        }
         List<Trainer> trainers = trainerService.getAllTrainers();
         modelMap.addAttribute("trainers", trainers);
 
@@ -39,13 +43,17 @@ public class SubscriberController {
     }
 
     @RequestMapping(value = "/subscriber/add", method = RequestMethod.POST)
-    private String addSubscriber(
-            @RequestParam(value = "subscriber_name", required = true) String subscriber_name,
-            @RequestParam(value = "subscriber_age", required = true) int subscriber_age,
-            @RequestParam(value = "subscriber_gender", required = true) String subscriber_gender,
-            @RequestParam(value = "subscriber_address", required = true) String subscriber_address,
-            @RequestParam(value = "subscriber_trainer_id", required = true) Long subscriber_trainer_id,
-            @RequestParam(value = "subscription_plan_id", required = true) Long subscription_plan_id) {
+    private String addSubscriber(HttpServletRequest request,
+                                 @RequestParam(value = "subscriber_name", required = true) String subscriber_name,
+                                 @RequestParam(value = "subscriber_age", required = true) int subscriber_age,
+                                 @RequestParam(value = "subscriber_gender", required = true) String subscriber_gender,
+                                 @RequestParam(value = "subscriber_address", required = true) String subscriber_address,
+                                 @RequestParam(value = "subscriber_trainer_id", required = true) Long subscriber_trainer_id,
+                                 @RequestParam(value = "subscription_plan_id", required = true) Long subscription_plan_id) {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("adminId") == null) {
+            return "redirect:/";
+        }
         Trainer trainer = trainerService.getTrainer(subscriber_trainer_id);
         SubscriptionPlan subscriptionPlan = subscriptionPlanService.getSubscriptionPlan(subscription_plan_id);
         Subscriber subscriber = new Subscriber(subscriber_name, subscriber_age, subscriber_gender, subscriber_address, true, 0, trainer, subscriptionPlan);
@@ -57,7 +65,12 @@ public class SubscriberController {
     }
 
     @RequestMapping(value = "/subscriber/edit-subscriber/{subscriber_id}")
-    private String editSubscriber(ModelMap modelMap, @PathVariable Long subscriber_id) {
+    private String editSubscriber(ModelMap modelMap, HttpServletRequest request,
+                                  @PathVariable Long subscriber_id) {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("adminId") == null) {
+            return "redirect:/";
+        }
         Subscriber subscriber = subscriberService.getSubscriber(subscriber_id);
         modelMap.addAttribute("subscriber", subscriber);
 

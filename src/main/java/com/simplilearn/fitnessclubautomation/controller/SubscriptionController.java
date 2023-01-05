@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,15 +18,24 @@ public class SubscriptionController {
     SubscriptionPlanService subscriptionPlanService;
 
     @RequestMapping(value = "/subscriptionplan/add-new")
-    private String addSubscriptionPlan() {
+    private String addSubscriptionPlan(ModelMap modelMap, HttpServletRequest request) {
+        modelMap.addAttribute("pageTitle", "Add new Plan");
+        HttpSession session = request.getSession();
+        if (session.getAttribute("adminId") == null) {
+            return "redirect:/";
+        }
         return "add-plan";
     }
 
     @RequestMapping(value = "/subscriptionplan/add", method = RequestMethod.POST)
-    private String addSubscriptionPlan(ModelMap modelMap,
+    private String addSubscriptionPlan(ModelMap modelMap, HttpServletRequest request,
                                        @RequestParam(value = "plan_title", required = true) String plan_title,
                                        @RequestParam(value = "plan_duration", required = true) int plan_duration,
                                        @RequestParam(value = "plan_fees", required = true) int plan_fees) {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("adminId") == null) {
+            return "redirect:/";
+        }
         if (plan_duration <= 0) {
             modelMap.addAttribute("error", true);
             modelMap.addAttribute("message", "Invalid duration");
@@ -43,7 +54,11 @@ public class SubscriptionController {
     }
 
     @RequestMapping(value = "/subscriptionplan/edit-plan/{plan_id}")
-    private String editSubscriptionPlan(ModelMap modelMap, @PathVariable Long plan_id) {
+    private String editSubscriptionPlan(ModelMap modelMap, HttpServletRequest request, @PathVariable Long plan_id) {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("adminId") == null) {
+            return "redirect:/";
+        }
         SubscriptionPlan plan = null;
         try {
             plan = subscriptionPlanService.getSubscriptionPlan(plan_id);
@@ -61,11 +76,15 @@ public class SubscriptionController {
     }
 
     @RequestMapping(value = "/subscriptionplan/edit", method = RequestMethod.POST)
-    private String editSubscriptionPlan(ModelMap modelMap,
+    private String editSubscriptionPlan(ModelMap modelMap, HttpServletRequest request,
                                         @RequestParam(value = "plan_id", required = true) Long plan_id,
                                         @RequestParam(value = "plan_title", required = true) String plan_title,
                                         @RequestParam(value = "plan_duration", required = true) int plan_duration,
                                         @RequestParam(value = "plan_fees", required = true) int plan_fees) {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("adminId") == null) {
+            return "redirect:/";
+        }
         if (plan_duration <= 0) {
             modelMap.addAttribute("error", true);
             modelMap.addAttribute("message", "Invalid duration");
@@ -84,7 +103,11 @@ public class SubscriptionController {
     }
 
     @RequestMapping(value = "/subscriptionplan/delete/{plan_id}")
-    private String deleteSubscriptionPlan(ModelMap modelMap, @PathVariable Long plan_id) {
+    private String deleteSubscriptionPlan(ModelMap modelMap, HttpServletRequest request, @PathVariable Long plan_id) {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("adminId") == null) {
+            return "redirect:/";
+        }
         try {
             subscriptionPlanService.deleteSubscriptionPlan(plan_id);
             return "redirect:/subscriptionplan";
@@ -96,12 +119,16 @@ public class SubscriptionController {
     }
 
     @RequestMapping(value = "/subscriptionplan")
-    private String getAllSubscriptionPlans(ModelMap modelMap) {
+    private String getAllSubscriptionPlans(ModelMap modelMap, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("adminId") == null) {
+            return "redirect:/";
+        }
         List<SubscriptionPlan> subscriptionPlans = new ArrayList<>();
         try {
             subscriptionPlans = subscriptionPlanService.getAllSubscriptionPlans();
             modelMap.addAttribute("subscriptionPlans", subscriptionPlans);
-//            modelMap.addAttribute("success", true);
+            modelMap.addAttribute("success", true);
             modelMap.addAttribute("message", "Total <b>" + subscriptionPlans.size() + "</b> subscription plans found.");
             return "plan-list";
         } catch (Exception ex) {
@@ -112,7 +139,11 @@ public class SubscriptionController {
     }
 
     @RequestMapping(value = "/subscriptionplan/{plan_id}")
-    private String getSubscriptionPlan(ModelMap modelMap, @PathVariable Long plan_id) {
+    private String getSubscriptionPlan(ModelMap modelMap, HttpServletRequest request, @PathVariable Long plan_id) {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("adminId") == null) {
+            return "redirect:/";
+        }
         SubscriptionPlan subscriptionPlan = new SubscriptionPlan();
         try {
             subscriptionPlan = subscriptionPlanService.getSubscriptionPlan(plan_id);

@@ -30,7 +30,6 @@ public class AdminController {
                          @RequestParam(value = "user_password", required = true) String user_password) {
         modelMap.addAttribute("pagetitle", "Login");
         Admin admin = adminService.login(user_email, user_password);
-//        System.out.println("Admin IS - " + admin.getAdminName());
         if (admin == null) {
             modelMap.addAttribute("error", true);
             modelMap.addAttribute("message", "Invalid Credentials! Please try again.");
