@@ -39,9 +39,7 @@ CREATE TABLE `tbl_admin` (
 --
 
 INSERT INTO `tbl_admin` (`admin_id`, `admin_name`, `admin_email`, `admin_password`) VALUES
-(1, 'Waseem', 'admin@gmail.com', 'admin123'),
-(2, 'Waseem', 'admin@gmail.com', 'admin123'),
-(3, 'Waseem', 'admin@gmail.com', 'admin123');
+(1, 'Admin', 'admin@gmail.com', 'admin123');
 
 -- --------------------------------------------------------
 
@@ -61,13 +59,6 @@ CREATE TABLE `tbl_subscriber` (
 --
 -- Dumping data for table `tbl_subscriber`
 --
-
-INSERT INTO `tbl_subscriber` (`subscriber_id`, `subscriber_name`, `subscriber_age`, `subscriber_gender`, `subscriber_address`, `subscriber_status`) VALUES
-(1, 'Waseem Attar', 30, 'Male', 'Mumbai', 1),
-(2, 'Alex', 25, 'Male', 'Mumbai', 1),
-(3, 'Alexa', 25, 'Female', 'Mumbai', 1),
-(5, 'John', 25, 'Male', 'Mumbai', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -86,11 +77,6 @@ CREATE TABLE `tbl_trainer` (
 --
 -- Dumping data for table `tbl_trainer`
 --
-
-INSERT INTO `tbl_trainer` (`trainer_id`, `trainer_name`, `trainer_age`, `trainer_gender`, `trainer_experience`, `trainer_address`) VALUES
-(1, 'Waseem Attar', 30, 'Male', 6, 'Mumbai'),
-(2, 'Alexandar Pierce', 30, 'Male', 6, 'Pune'),
-(3, 'Angela Johns', 25, 'Female', 3, 'Chennai');
 
 --
 -- Indexes for dumped tables
@@ -122,19 +108,19 @@ ALTER TABLE `tbl_trainer`
 -- AUTO_INCREMENT for table `tbl_admin`
 --
 ALTER TABLE `tbl_admin`
-  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tbl_subscriber`
 --
 ALTER TABLE `tbl_subscriber`
-  MODIFY `subscriber_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `subscriber_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `tbl_trainer`
 --
 ALTER TABLE `tbl_trainer`
-  MODIFY `trainer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `trainer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
